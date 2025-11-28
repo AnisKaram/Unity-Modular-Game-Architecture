@@ -1,0 +1,16 @@
+{
+    "name": "Features.Inventory",
+    "rootNamespace": "Project.Features.Inventory",
+    "references": [
+        "GUID:a9d46a0a23b2c4d7c9a462589652d5cb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
