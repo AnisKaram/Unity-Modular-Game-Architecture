@@ -2,6 +2,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using Project.Features.Inventory.Domain;
+using Project.Features.Inventory.Presentation;
 
 namespace Project.App.Scopes
 {
@@ -12,8 +13,12 @@ namespace Project.App.Scopes
         
         protected override void Configure(IContainerBuilder builder)
         {
-            InventoryModel inventory = new InventoryModel(m_InventoryCapacity);
-            builder.RegisterInstance(inventory).As<InventoryModel>();
+            InventoryModel inventoryModel = new InventoryModel(m_InventoryCapacity);
+            builder.RegisterInstance(inventoryModel).As<InventoryModel>();
+
+            // VContainer will handle the creation of this class when using 
+            // RegisterEntryPoint.
+            builder.RegisterEntryPoint<InventoryPresenter>();
         }
     }
 }
