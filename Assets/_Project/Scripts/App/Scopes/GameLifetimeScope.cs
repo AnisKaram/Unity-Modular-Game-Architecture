@@ -3,6 +3,7 @@ using VContainer;
 using VContainer.Unity;
 using Project.Features.Inventory.Domain;
 using Project.Features.Inventory.Presentation;
+using Project.Features.Inventory.Services;
 using Project.Features.Inventory.View;
 
 namespace Project.App.Scopes
@@ -20,6 +21,12 @@ namespace Project.App.Scopes
         
         protected override void Configure(IContainerBuilder builder)
         {
+            // Register a scriptable object.
+            builder.RegisterInstance(m_ItemRegistry);
+            
+            // Register the save service.
+            builder.Register<JsonInventoryService>(Lifetime.Singleton);
+            
             InventoryModel inventoryModel = new InventoryModel(m_InventoryCapacity);
             builder.RegisterInstance(inventoryModel).As<InventoryModel>();
 
@@ -30,9 +37,6 @@ namespace Project.App.Scopes
             
             // This is how we register a Monobehaviour present in our scene.
             builder.RegisterComponent(m_InventoryView);
-
-            // Register a scriptable object
-            builder.RegisterInstance(m_ItemRegistry);
         }
     }
 }
