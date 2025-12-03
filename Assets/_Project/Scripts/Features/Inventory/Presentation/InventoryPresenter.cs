@@ -1,5 +1,6 @@
 using System;
 using Project.Features.Inventory.Domain;
+using Project.Features.Inventory.Services;
 using Project.Features.Inventory.View;
 using UnityEngine;
 using VContainer.Unity;
@@ -10,19 +11,25 @@ namespace Project.Features.Inventory.Presentation
     {
         private readonly InventoryModel m_InventoryModel;
         private readonly InventoryView m_InventoryView;
-        
-        public InventoryPresenter(InventoryModel inventoryModel, InventoryView inventoryView)
+        private readonly JsonInventoryService m_SaveService;
+
+        public InventoryPresenter(InventoryModel inventoryModel, InventoryView inventoryView,
+            JsonInventoryService saveService)
         {
             m_InventoryModel = inventoryModel;
             m_InventoryView = inventoryView;
+            m_SaveService = saveService;
         }
-        
+
         public void Start()
         {
             Debug.Log("Starting InventoryPresenter");
             
             m_InventoryModel.OnSlotUpdated += InventoryModel_OnSlotUpdated;
             m_InventoryView.OnSlotClicked += InventoryView_OnSlotClicked;
+            
+            // Load the saved data if any.
+            m_SaveService.Load(m_InventoryModel);
             
             // Initialize the Grid
             int inventoryCapacity = m_InventoryModel.Capacity;
