@@ -23,10 +23,9 @@ namespace Project.Features.Inventory.Presentation
 
         public void Start()
         {
-            Debug.Log("Starting InventoryPresenter");
-            
             m_InventoryModel.OnSlotUpdated += InventoryModel_OnSlotUpdated;
             m_InventoryView.OnSlotClicked += InventoryView_OnSlotClicked;
+            m_InventoryView.OnSlotDropped += InventoryView_OnSlotDropped;
             
             // Load the saved data if any.
             m_SaveService.Load(m_InventoryModel);
@@ -43,10 +42,9 @@ namespace Project.Features.Inventory.Presentation
         }
         public void Dispose()
         {
-            Debug.Log("Destroying InventoryPresenter");
-            
             m_InventoryModel.OnSlotUpdated -= InventoryModel_OnSlotUpdated;
             m_InventoryView.OnSlotClicked -= InventoryView_OnSlotClicked;
+            m_InventoryView.OnSlotDropped -= InventoryView_OnSlotDropped;
         }
         
         private void InventoryModel_OnSlotUpdated(int slotIndex)
@@ -59,6 +57,11 @@ namespace Project.Features.Inventory.Presentation
         private void InventoryView_OnSlotClicked(int slotIndex)
         {
             Debug.Log("Slot Clicked, index: " + slotIndex);
+        }
+
+        private void InventoryView_OnSlotDropped(int startSlotIndex, int endSlotIndex)
+        {
+            m_InventoryModel.SwapSlots(startSlotIndex, endSlotIndex);
         }
 
         private void HandleSlotUpdate(int index)

@@ -18,7 +18,7 @@ namespace Project.Features.Inventory.View
         [SerializeField] private List<InventorySlotView> m_InventorySlots;
 
         public event Action<int> OnSlotClicked;
-        public event Action<int, int> OnItemDropped; // SourceIndex, DestinationIndex
+        public event Action<int, int> OnSlotDropped; // SourceIndex, DestinationIndex
         
         public void InitializeUI(int capacity)
         {
@@ -72,7 +72,7 @@ namespace Project.Features.Inventory.View
         {
             if (m_DragStartIndex != -1 && m_DragStartIndex != dropIndex)
             {
-                OnItemDropped?.Invoke(m_DragStartIndex, dropIndex);
+                OnSlotDropped?.Invoke(m_DragStartIndex, dropIndex);
                 Debug.Log($"Item dropped, start index: {m_DragStartIndex}, drop index: {dropIndex}");
             }
         }
