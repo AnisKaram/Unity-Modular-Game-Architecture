@@ -503,7 +503,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Features.Inventory::Project.Features.Inventory.View.InventoryView
   m_InventorySlotPrefab: {fileID: 8144843877171326677, guid: 875da93f9234a424fbbc1b78ea58e2a4, type: 3}
+  m_InventoryDragGhost: {fileID: 1692131552}
   m_Container: {fileID: 775282446}
+  m_DragStartIndex: -1
   m_InventorySlots: []
 --- !u!1 &1498616487
 GameObject:
@@ -673,7 +675,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Features.Inventory::Project.Features.Inventory.InventoryDragGhost
   m_IconImage: {fileID: 1692131550}
-  m_IconTransform: {fileID: 1692131549}
 --- !u!1 &1771974808
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,12 +10,16 @@ namespace Project.Features.Inventory.View
     public class InventoryView : MonoBehaviour
     {
         [SerializeField] private InventorySlotView m_InventorySlotPrefab;
+        [SerializeField] private InventoryDragGhost m_InventoryDragGhost;
         [SerializeField] private Transform m_Container;
+
+        [SerializeField] private int m_DragStartIndex = -1;
         
         [SerializeField] private List<InventorySlotView> m_InventorySlots;
 
         public event Action<int> OnSlotClicked;
-
+        public event Action<int, int> OnItemDropped; // SourceIndex, DestinationIndex
+        
         public void InitializeUI(int capacity)
         {
             if (capacity <= 0)
@@ -28,7 +32,14 @@ namespace Project.Features.Inventory.View
             for (int i = 0; i < capacity; i++)
             {
                 InventorySlotView inventorySlotView = Instantiate(m_InventorySlotPrefab, m_Container);
+                
                 inventorySlotView.Initialize(i, (index) => OnSlotClicked?.Invoke(index));
+                
+                inventorySlotView.OnBeginDragSlot += InventorySlotView_OnBeginDragSlot;
+                inventorySlotView.OnEndDragSlot += InventorySlotView_OnEndDragSlot;
+                inventorySlotView.OnDropSlot += InventorySlotView_OnDropSlot;
+                inventorySlotView.OnDragSlot += InventorySlotView_OnDragSlot;
+                
                 m_InventorySlots.Add(inventorySlotView);
             }
         }
@@ -43,6 +54,32 @@ namespace Project.Features.Inventory.View
             
             InventorySlotView inventorySlotView = m_InventorySlots[index];
             inventorySlotView.SetData(icon, quantity);
+        }
+
+        private void InventorySlotView_OnBeginDragSlot(int index, Sprite icon)
+        {
+            m_DragStartIndex = index;
+            m_InventoryDragGhost.StartDrag(icon);
+        }
+
+        private void InventorySlotView_OnEndDragSlot(int index)
+        {
+            m_InventoryDragGhost.EndDrag();
+            m_DragStartIndex = -1;
+        }
+
+        private void InventorySlotView_OnDropSlot(int dropIndex)
+        {
+            if (m_DragStartIndex != -1 && m_DragStartIndex != dropIndex)
+            {
+                OnItemDropped?.Invoke(m_DragStartIndex, dropIndex);
+                Debug.Log($"Item dropped, start index: {m_DragStartIndex}, drop index: {dropIndex}");
+            }
+        }
+
+        private void InventorySlotView_OnDragSlot()
+        {
+            m_InventoryDragGhost.UpdatePosition(Input.mousePosition);
         }
     }
 }
