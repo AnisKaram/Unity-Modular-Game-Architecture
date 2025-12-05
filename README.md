@@ -14,9 +14,17 @@ To engineer a system that solves the common "Spaghetti Code" problems in game de
 *   **💉 Dependency Injection (VContainer):** Implements a stateless architecture. Services and Models are injected, making the system modular and easy to expand (e.g., sharing the Save System with Chests or Shops).
 *   **💾 Persistence Layer:** A robust, stateless JSON Save/Load service handling Data Transfer Objects (DTOs) and `ScriptableObject` registry lookups.
 *   **🖱️ Complex Interaction:** Full Drag-and-Drop system utilizing Unity's `IBeginDragHandler` and `IDropHandler` interfaces, connected by the Presenter.
-*   **🧪 Unit Testing:** Core logic (Stacking, Swapping, Capacity limits) verified with NUnit EditMode tests.
+*   **🧪 Unit Testing:** 
+![Tests Passing](Assets/Documentation/Images/tests_passing.png)
+Core logic (Stacking, Swapping, Capacity limits) verified with NUnit EditMode tests.
+
+### 🎮 Gameplay Demo
+![Gameplay Demo](Assets/Documentation/Images/demo.gif)
+*(Showing Drag & Drop, Stacking, and Save/Load)*
 
 ## 🏗️ Architecture Overview
+
+![Architecture Diagram](Assets/Documentation/Images/arch_diagram.png)
 
 ### 1. The Domain (Model) 🧠
 *   **Responsibility:** Holds the state (`List<InventorySlot>`) and executes logic.
