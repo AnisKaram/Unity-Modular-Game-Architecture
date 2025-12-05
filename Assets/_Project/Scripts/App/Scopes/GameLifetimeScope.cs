@@ -8,6 +8,9 @@ using Project.Features.Inventory.View;
 
 namespace Project.App.Scopes
 {
+    /// <summary>
+    /// LifeTime scope for the scene.
+    /// </summary>
     public class GameLifetimeScope : LifetimeScope
     {
         [Header("Settings")]
@@ -27,6 +30,7 @@ namespace Project.App.Scopes
             // Register the save service.
             builder.Register<JsonInventoryService>(Lifetime.Singleton);
             
+            // Register the inventory model.
             InventoryModel inventoryModel = new InventoryModel(m_InventoryCapacity);
             builder.RegisterInstance(inventoryModel).As<InventoryModel>();
 

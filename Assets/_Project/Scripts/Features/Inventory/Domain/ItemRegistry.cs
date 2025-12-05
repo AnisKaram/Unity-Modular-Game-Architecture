@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Project.Features.Inventory.Domain
 {
+    /// <summary>
+    /// Hold all the inventory items which is likely to be a database of items.
+    /// </summary>
     [CreateAssetMenu(fileName = "New Item Registry", menuName = "Inventory/Item Registry")]
     public class ItemRegistry : ScriptableObject
     {

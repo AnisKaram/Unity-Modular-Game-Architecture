@@ -3,7 +3,10 @@ using UnityEngine.UI;
 
 namespace Project.Features.Inventory.View
 {
-    public class InventoryDragGhost : MonoBehaviour
+    /// <summary>
+    /// This creates a wrapper for the UI drag ghost view image.
+    /// </summary>
+    public class InventoryDragGhostView : MonoBehaviour
     {
         [SerializeField] private Image m_IconImage;
 

@@ -11,11 +11,11 @@ namespace Project.Tests
         private InventoryItemSO m_SwordItem;
         
         // Since it has Set up annotation, it will run with every test
-        // This is first step called: Arrange (Setup)
+        // This is first step called: Arrange (Setup).
         [SetUp]
         public void Setup()
         {
-            // Arrange
+            // Arrange.
             m_InventoryModel = new InventoryModel(10);
             
             m_PotionItem = ScriptableObject.CreateInstance<InventoryItemSO>();

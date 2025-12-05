@@ -1,4 +1,3 @@
-using System;
 using Project.Features.Inventory.Domain;
 using Project.Features.Inventory.Services;
 using UnityEngine;
@@ -6,6 +5,9 @@ using VContainer;
 
 namespace Project.Features.Inventory.DebugScripts
 {
+    /// <summary>
+    /// For testing the inventory.
+    /// </summary>
     public class InventoryDebugInput : MonoBehaviour
     {
         [Header("Test Items")] 
@@ -54,6 +56,7 @@ namespace Project.Features.Inventory.DebugScripts
 
             if (Input.GetKeyDown(KeyCode.K))
             {
+                // For saving.
                 m_SaveService.Save(m_InventoryModel);
                 Debug.Log("Saved Inventory Model");
             }

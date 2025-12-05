@@ -14,7 +14,7 @@ namespace Project.Features.Inventory.Domain
 
         public event Action<int> OnSlotUpdated;
 
-        // Constructor
+        // Constructor.
         public InventoryModel(int capacity)
         {
             Capacity = capacity;
@@ -26,7 +26,7 @@ namespace Project.Features.Inventory.Domain
             }
         }
 
-        // Try adding a new item to the Slots list or add it to the existing and the leftover (if-any)
+        // Try adding a new item to the Slots list or add it to the existing and the leftover (if-any).
         public bool TryAddItem(InventoryItemSO itemToAdd, int quantity)
         {
             // First, we need to try to find an existing item in the Slots list.
@@ -78,7 +78,7 @@ namespace Project.Features.Inventory.Domain
             return quantity <= 0;
         }
 
-        // Remove an item from the Slots list
+        // Remove an item from the Slots list.
         public void RemoveItem(int index, int amount)
         {
             InventorySlot slot = GetSlot(index);
@@ -102,7 +102,7 @@ namespace Project.Features.Inventory.Domain
             OnSlotUpdated?.Invoke(index);
         }
 
-        // Swap two items between two slots
+        // Swap two items between two slots.
         public void SwapSlots(int indexA, int indexB)
         {
             InventorySlot slotA = GetSlot(indexA);
@@ -113,7 +113,7 @@ namespace Project.Features.Inventory.Domain
                 return;
             }
 
-            // Store A in temporary fields
+            // Store A in temporary fields.
             var tempItem = slotA.ItemData;
             var tempQuantity = slotA.Quantity;
 
@@ -127,15 +127,15 @@ namespace Project.Features.Inventory.Domain
                 slotA.SetItem(slotB.ItemData, slotB.Quantity);
             }
 
-            // Move temp A into B
+            // Move temp A into B.
             slotB.SetItem(tempItem, tempQuantity);
 
-            // Notify both slots that has been updated
+            // Notify both slots that has been updated.
             OnSlotUpdated?.Invoke(indexA);
             OnSlotUpdated?.Invoke(indexB);
         }
 
-        // Get the total quantity of an item in the Slots list
+        // Get the total quantity of an item in the Slots list.
         public int GetTotalQuantity(string itemID)
         {
             int total = 0;
@@ -151,7 +151,7 @@ namespace Project.Features.Inventory.Domain
             return total;
         }
 
-        // Use and consume the item
+        // Use and consume the item.
         public bool ConsumeItem(string itemID, int amount)
         {
             if (GetTotalQuantity(itemID) < amount)
@@ -159,7 +159,7 @@ namespace Project.Features.Inventory.Domain
                 return false;
             }
 
-            // Remove from multiple slots if available
+            // Remove from multiple slots if available.
             for (int i = 0; i < Slots.Count; i++)
             {
                 if (amount <= 0)
@@ -181,7 +181,7 @@ namespace Project.Features.Inventory.Domain
             return true;
         }
 
-        // Checks if the inventory is full or not
+        // Checks if the inventory is full or not.
         public bool IsFull()
         {
             for (int i = 0; i < Slots.Count; i++)
@@ -196,7 +196,7 @@ namespace Project.Features.Inventory.Domain
             return true;
         }
 
-        // Get the slot from the Slots list or null if not found
+        // Get the slot from the Slots list or null if not found.
         public InventorySlot GetSlot(int index)
         {
             if (index >= 0 && index < Slots.Count)

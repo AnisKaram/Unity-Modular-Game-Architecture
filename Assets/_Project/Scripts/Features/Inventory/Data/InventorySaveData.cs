@@ -3,6 +3,9 @@ using System;
 
 namespace Project.Features.Inventory.Data
 {
+    /// <summary>
+    /// Represents the data to be saved for each inventory slot.
+    /// </summary>
     [Serializable]
     public class InventorySaveData
     {

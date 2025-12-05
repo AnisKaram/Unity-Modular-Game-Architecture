@@ -6,6 +6,9 @@ using System.IO;
 
 namespace Project.Features.Inventory.Services
 {
+    /// <summary>
+    /// Save and load as JSON file.
+    /// </summary>
     public class JsonInventoryService
     {
         private readonly string m_FilePath;
@@ -37,7 +40,7 @@ namespace Project.Features.Inventory.Services
             {
                 InventorySlot slot = model.Slots[index];
 
-                // Continue/Don't save if the slot is empty
+                // Continue/Don't save if the slot is empty.
                 if (slot.IsEmpty)
                 {
                     continue;
@@ -51,7 +54,7 @@ namespace Project.Features.Inventory.Services
                     slotIndex = index
                 };
 
-                // Add the created struct to the list of structs in the InventorySaveData
+                // Add the created struct to the list of structs in the InventorySaveData.
                 saveData.inventoryItems.Add(slotSaveData);
             }
 
@@ -73,7 +76,7 @@ namespace Project.Features.Inventory.Services
                 return;
             }
 
-            // Read the Json file and convert it into a InventorySaveData object
+            // Read the Json file and convert it into a InventorySaveData object.
             string json = File.ReadAllText(m_FilePath);
             InventorySaveData saveData = JsonUtility.FromJson<InventorySaveData>(json);
             

@@ -10,7 +10,7 @@ namespace Project.Features.Inventory.View
     public class InventoryView : MonoBehaviour
     {
         [SerializeField] private InventorySlotView m_InventorySlotPrefab;
-        [SerializeField] private InventoryDragGhost m_InventoryDragGhost;
+        [SerializeField] private InventoryDragGhostView m_InventoryDragGhostView;
         [SerializeField] private Transform m_Container;
 
         [SerializeField] private int m_DragStartIndex = -1;
@@ -59,12 +59,12 @@ namespace Project.Features.Inventory.View
         private void InventorySlotView_OnBeginDragSlot(int index, Sprite icon)
         {
             m_DragStartIndex = index;
-            m_InventoryDragGhost.StartDrag(icon);
+            m_InventoryDragGhostView.StartDrag(icon);
         }
 
         private void InventorySlotView_OnEndDragSlot(int index)
         {
-            m_InventoryDragGhost.EndDrag();
+            m_InventoryDragGhostView.EndDrag();
             m_DragStartIndex = -1;
         }
 
@@ -79,7 +79,7 @@ namespace Project.Features.Inventory.View
 
         private void InventorySlotView_OnDragSlot()
         {
-            m_InventoryDragGhost.UpdatePosition(Input.mousePosition);
+            m_InventoryDragGhostView.UpdatePosition(Input.mousePosition);
         }
     }
 }

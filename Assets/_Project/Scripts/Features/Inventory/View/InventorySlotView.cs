@@ -42,7 +42,7 @@ namespace Project.Features.Inventory.View
 
         public void SetData(Sprite icon, int quantity)
         {
-            // Empty Slot
+            // Empty Slot.
             if (icon == null)
             {
                 m_EmptyIcon.gameObject.SetActive(true);
@@ -51,12 +51,12 @@ namespace Project.Features.Inventory.View
                 return;
             }
             
-            // Valid item
+            // Valid item.
             m_EmptyIcon.gameObject.SetActive(false);
             m_Icon.gameObject.SetActive(true);
             m_Icon.sprite = icon;
             
-            // Show the text if quantity is 2+ 
+            // Show the text if quantity is 2+.
             bool isStack = quantity > 1;
             m_QuantityText.gameObject.SetActive(isStack);
             if (isStack)
@@ -67,7 +67,7 @@ namespace Project.Features.Inventory.View
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            // Only start the drag if the icon is active
+            // Only start the drag if the icon is active.
             if (!m_Icon.gameObject.activeSelf)
             {
                 return;

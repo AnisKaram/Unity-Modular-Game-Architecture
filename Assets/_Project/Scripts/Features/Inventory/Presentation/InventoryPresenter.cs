@@ -7,6 +7,9 @@ using VContainer.Unity;
 
 namespace Project.Features.Inventory.Presentation
 {
+    /// <summary>
+    /// Inventory presenter that connects the model and view.
+    /// </summary>
     public class InventoryPresenter : IStartable, IDisposable
     {
         private readonly InventoryModel m_InventoryModel;
@@ -30,11 +33,11 @@ namespace Project.Features.Inventory.Presentation
             // Load the saved data if any.
             m_SaveService.Load(m_InventoryModel);
             
-            // Initialize the Grid
+            // Initialize the Grid.
             int inventoryCapacity = m_InventoryModel.Capacity;
             m_InventoryView.InitializeUI(inventoryCapacity);
             
-            // Update the grid if model has saved inventory items
+            // Update the grid if model has saved inventory items.
             for (int i = 0; i < inventoryCapacity; i++)
             {
                 HandleSlotUpdate(i);

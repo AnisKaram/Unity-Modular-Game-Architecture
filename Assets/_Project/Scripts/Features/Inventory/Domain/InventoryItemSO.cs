@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Project.Features.Inventory.Domain
 {
     /// <summary>
-    /// Defines what an item (data) is.
+    /// Defines what an inventory item (data) is.
     /// </summary>
     [CreateAssetMenu(fileName = "New Inventory Item", menuName = "Inventory/Item Data")]
     public class InventoryItemSO : ScriptableObject
@@ -15,7 +15,7 @@ namespace Project.Features.Inventory.Domain
 
         private void OnValidate()
         {
-            // Auto-Generate a new ID if empty, null or with white-spaces
+            // Auto-Generate a new ID if empty, null or with white-spaces.
             if (string.IsNullOrWhiteSpace(ID))
             {
                 ID = System.Guid.NewGuid().ToString();
