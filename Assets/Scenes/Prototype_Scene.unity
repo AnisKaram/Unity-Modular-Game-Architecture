@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Features.Inventory::Project.Features.Inventory.View.InventoryView
   m_InventorySlotPrefab: {fileID: 8144843877171326677, guid: 875da93f9234a424fbbc1b78ea58e2a4, type: 3}
-  m_InventoryDragGhostView: {fileID: 0}
+  m_InventoryDragGhostView: {fileID: 1692131552}
   m_Container: {fileID: 775282446}
   m_DragStartIndex: -1
   m_InventorySlots: []
