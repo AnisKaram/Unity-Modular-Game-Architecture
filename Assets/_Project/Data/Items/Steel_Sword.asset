@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Features.Inventory::Project.Features.Inventory.Domain.InventoryItemSO
   <ID>k__BackingField: 1
   <Name>k__BackingField: Steel Sword
-  <Icon>k__BackingField: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  <Icon>k__BackingField: {fileID: 712035800519618848, guid: 5555116c8467a454c8c90c5cece8dc84, type: 3}
   <MaxStack>k__BackingField: 1
