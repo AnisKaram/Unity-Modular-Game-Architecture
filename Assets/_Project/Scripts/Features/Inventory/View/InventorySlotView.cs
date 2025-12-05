@@ -12,6 +12,7 @@ namespace Project.Features.Inventory.View
     public class InventorySlotView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
     {
         [SerializeField] private Image m_Icon;
+        [SerializeField] private Image m_EmptyIcon;
         [SerializeField] private Button m_SlotButton;
         [SerializeField] private TextMeshProUGUI m_QuantityText;
         [SerializeField] private int m_Index;
@@ -44,12 +45,14 @@ namespace Project.Features.Inventory.View
             // Empty Slot
             if (icon == null)
             {
+                m_EmptyIcon.gameObject.SetActive(true);
                 m_Icon.gameObject.SetActive(false);
                 m_QuantityText.gameObject.SetActive(false);
                 return;
             }
             
             // Valid item
+            m_EmptyIcon.gameObject.SetActive(false);
             m_Icon.gameObject.SetActive(true);
             m_Icon.sprite = icon;
             
