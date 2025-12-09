@@ -15,3 +15,6 @@ MonoBehaviour:
   <movementSpeed>k__BackingField: 5
   <jumpForce>k__BackingField: 5
   <rotationSpeed>k__BackingField: 10
+  <groundLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 1024

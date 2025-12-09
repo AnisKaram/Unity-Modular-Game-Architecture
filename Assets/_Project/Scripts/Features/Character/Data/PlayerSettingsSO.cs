@@ -8,5 +8,6 @@ namespace Project.Features.Character.Data
         [field: SerializeField] public float movementSpeed { get; private set; } = 5f;
         [field: SerializeField] public float jumpForce { get; private set; } = 5f;
         [field: SerializeField] public float rotationSpeed { get; private set; } = 10f;
+        [field: SerializeField] public LayerMask groundLayer { get; private set; }
     }
 }
