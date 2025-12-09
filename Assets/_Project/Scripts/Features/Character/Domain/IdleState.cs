@@ -9,6 +9,7 @@ namespace Project.Features.Character.Domain
         private readonly PlayerInputReader m_PlayerInputReader;
 
         public event Action OnMove;
+        public event Action OnJump;
         
         public IdleState(PlayerInputReader playerInputReader)
         {
@@ -26,6 +27,12 @@ namespace Project.Features.Character.Domain
             if (m_PlayerInputReader.GetPlayerInputData().movement.sqrMagnitude > moveOffset)
             {
                 OnMove?.Invoke();
+                return;
+            }
+            
+            if (m_PlayerInputReader.GetPlayerInputData().jump)
+            {
+                OnJump?.Invoke();
             }
         }
 

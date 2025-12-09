@@ -12,6 +12,7 @@ namespace Project.Features.Character.Domain
         private readonly Transform m_ObjectTransform;
 
         public event Action OnIdle;
+        public event Action OnJump;
 
         public MoveState(PlayerSettingsSO playerSettings, PlayerInputReader playerInputReader, Transform objectTransform)
         {
@@ -30,6 +31,12 @@ namespace Project.Features.Character.Domain
             if (m_PlayerInputReader.GetPlayerInputData().movement.sqrMagnitude == 0)
             {
                 OnIdle?.Invoke();
+                return;
+            }
+
+            if (m_PlayerInputReader.GetPlayerInputData().jump)
+            {
+                OnJump?.Invoke();
                 return;
             }
             
