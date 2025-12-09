@@ -2,7 +2,7 @@
 
 A production-ready, scalable Inventory System demonstrating **Clean Architecture**, **Dependency Injection**, and **Test-Driven Development (TDD)** in Unity.
 
-![Unity Version](https://img.shields.io/badge/Unity-6000.2.14f1-black)
+![Unity Version](https://img.shields.io/badge/Unity-6000.3.0f1-black)
 ![Architecture](https://img.shields.io/badge/Architecture-MVP-blue)
 ![Testing](https://img.shields.io/badge/Testing-NUnit-green)
 
@@ -17,10 +17,17 @@ To engineer a system that solves the common "Spaghetti Code" problems in game de
 *   **🧪 Unit Testing:** 
 ![Tests Passing](Assets/Documentation/Images/tests_passing.png)
 Core logic (Stacking, Swapping, Capacity limits) verified with NUnit EditMode tests.
+*   **🤖 Modular Character Controller:** A Finite State Machine (FSM) implementation where behaviors (Idle, Move, Jump) are isolated in pure C# classes.
+*   **🏗️ State Pattern:** States are decoupled via C# Events (`OnMove`, `OnJump`, etc...), allowing the Controller to act as a logic switchboard without spaghetti code.
+*   **⚙️ Data-Driven Tuning:** Movement physics (Speed, Jump Force) are configured via `ScriptableObjects`, enabling designers to tweak feel without code changes.
+*   **🎮 Input Bridging:** An `InputReader` layer that converts inputs into Domain-specific data structs, keeping logic independent of the Input System.
 
-### 🎮 Gameplay Demo
-![Gameplay Demo](Assets/Documentation/Images/demo.gif)
+### 🎮 Gameplay Demos
+![Gameplay Inventory Demo](Assets/Documentation/Images/demo.gif)
 *(Showing Drag & Drop, Stacking, and Save/Load)*
+
+![Gameplay Finite State Machine Demo](Assets/Documentation/Images/demo_FiniteStateMachine.gif)
+*(Character moving, jumping, and air moving)*
 
 ## 🏗️ Architecture Overview
 
@@ -41,6 +48,14 @@ Core logic (Stacking, Swapping, Capacity limits) verified with NUnit EditMode te
 *   **Key Trait:** Testable. Can be unit tested by mocking the View and Model.
 *   **Tech:** VContainer EntryPoint (`IStartable`, `IDisposable`).
 
+### 4. The Character (Finite State Machine) 🏃
+*   **The Brain (StateMachine):** A pure C# class that manages transitions (`Enter`, `Exit`, `Update`, `FixedUpdate`) and dependencies.
+*   **The States:**
+    *   **Idle:** Listens for input to transition to move or jump.
+    *   **Move:** Handles ground movement and rotation and transition to idle or jump
+    *   **Jump:** Handles character jump and air-rotation and movement and transition to idle.
+*   **The Wiring:** States communicate via **Events**. The `IdleState` doesn't know the `MoveState` exists; it just fires `OnMove`, and the `PlayerController` handles the transition. Same applies for all states.
+
 ## ⚔️ "Legacy" vs "Modern" Comparison
 
 This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Reference/LegacyInventoryManager.cs) to demonstrate the improvement over standard implementation.
@@ -57,6 +72,9 @@ This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Re
 2.  Open **Test Runner** (Window > General > Test Runner) and run EditMode tests to verify logic.
 3.  Open `Prototype_Scene`.
 4.  **Controls:**
+4.  **Controls:**
+    *   **WASD / Arrows**: Move Character
+    *   **Space**: Jump (with Air Control)
     *   **A**: Add Sword
     *   **S**: Add 5 Potions (Stacking Test)
     *   **R**: Remove Item
