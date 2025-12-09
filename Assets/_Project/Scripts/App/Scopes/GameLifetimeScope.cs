@@ -1,3 +1,5 @@
+using Project.Features.Character.Data;
+using Project.Features.Character.View;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -18,14 +20,17 @@ namespace Project.App.Scopes
         
         [Header("Data")]
         [SerializeField] private ItemRegistry m_ItemRegistry;
+        [SerializeField] private PlayerSettingsSO m_PlayerSettings;
         
         [Header("Scene Components")]
         [SerializeField] private InventoryView m_InventoryView;
+        [SerializeField] private PlayerInputReader m_PlayerInputReader;
         
         protected override void Configure(IContainerBuilder builder)
         {
             // Register a scriptable object.
             builder.RegisterInstance(m_ItemRegistry);
+            builder.RegisterInstance(m_PlayerSettings);
             
             // Register the save service.
             builder.Register<JsonInventoryService>(Lifetime.Singleton);
@@ -41,6 +46,7 @@ namespace Project.App.Scopes
             
             // This is how we register a Monobehaviour present in our scene.
             builder.RegisterComponent(m_InventoryView);
+            builder.RegisterComponent(m_PlayerInputReader);
         }
     }
 }
