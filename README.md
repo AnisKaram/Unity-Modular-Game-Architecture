@@ -22,12 +22,13 @@ Core logic (Stacking, Swapping, Capacity limits) verified with NUnit EditMode te
 *   **⚙️ Data-Driven Tuning:** Movement physics (Speed, Jump Force) are configured via `ScriptableObjects`, enabling designers to tweak feel without code changes.
 *   **🎮 Input Bridging:** An `InputReader` layer that converts inputs into Domain-specific data structs, keeping logic independent of the Input System.
 
-### 🎮 Gameplay Demos
-![Gameplay Inventory Demo](Assets/Documentation/Images/demo.gif)
-*(Showing Drag & Drop, Stacking, and Save/Load)*
+## 🎮 Gameplay Demos
 
+* **Gameplay Inventory Demo** Showing Drag & Drop, Stacking, and Save/Load.
+![Gameplay Inventory Demo](Assets/Documentation/Images/demo.gif)
+
+* **Gameplay Finite State Machine Demo** Character Moving, Jumping, and Air Moving.
 ![Gameplay Finite State Machine Demo](Assets/Documentation/Images/demo_FiniteStateMachine.gif)
-*(Character moving, jumping, and air moving)*
 
 ## 🏗️ Architecture Overview
 
