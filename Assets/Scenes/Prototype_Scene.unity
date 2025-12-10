@@ -477,12 +477,12 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1771974808}
-  - {fileID: 1549630464}
   m_InventoryCapacity: 10
   m_ItemRegistry: {fileID: 11400000, guid: 2e5031a36429245f0bd06ee43f4e8e3d, type: 2}
   m_PlayerSettings: {fileID: 11400000, guid: 24e61f0d8b6494dd2a30709f169ee478, type: 2}
   m_InventoryView: {fileID: 1088339890}
   m_PlayerInputReader: {fileID: 1549630466}
+  m_PlayerController: {fileID: 1549630465}
 --- !u!4 &940448497
 Transform:
   m_ObjectHideFlags: 0
