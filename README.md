@@ -1,9 +1,9 @@
-# 📦 Modular Clean Inventory System (Unity 6 + MVP + VContainer)
+# 📦 Modular Clean Game Architectures and Systems (Unity 6 + MVP + FSM)
 
 A production-ready, scalable Inventory System demonstrating **Clean Architecture**, **Dependency Injection**, and **Test-Driven Development (TDD)** in Unity.
 
 ![Unity Version](https://img.shields.io/badge/Unity-6000.3.0f1-black)
-![Architecture](https://img.shields.io/badge/Architecture-MVP-blue)
+![Architecture](https://img.shields.io/badge/Architecture-MVP%20%2B%20FSM-blue)
 ![Testing](https://img.shields.io/badge/Testing-NUnit-green)
 
 ## 🎯 The Goal
@@ -24,42 +24,44 @@ Core logic (Stacking, Swapping, Capacity limits) verified with NUnit EditMode te
 
 ## 🎮 Gameplay Demos
 
-* **Gameplay Inventory Demo** Showing Drag & Drop, Stacking, and Save/Load.
-![Gameplay Inventory Demo](Assets/Documentation/Images/demo.gif)
+### 1. Finite State Machine (Movement & Physics)
+Character Moving, Jumping, and Air Control.
+![Gameplay FSM Demo](Assets/Documentation/Images/demo_FiniteStateMachine.gif)
 
-* **Gameplay Finite State Machine Demo** Character Moving, Jumping, and Air Moving.
-![Gameplay Finite State Machine Demo](Assets/Documentation/Images/demo_FiniteStateMachine.gif)
+### 2. Inventory System (MVP)
+Drag & Drop, Stacking, and JSON Save/Load.
+![Gameplay Inventory Demo](Assets/Documentation/Images/demo.gif)
 
 ## 🏗️ Architecture Overview
 
 ![Architecture Diagram](Assets/Documentation/Images/arch_diagram.png)
 
 ### 1. The Domain (Model) 🧠
-*   **Responsibility:** Holds the state (`List<InventorySlot>`) and executes logic.
-*   **Key Trait:** Reactive. Fires C# Events (`OnSlotUpdated`) when state changes.
+*   **Responsibility:** Holds the state (e.g., `InventorySlot`, `PlayerStateMachine`) and executes logic.
+*   **Key Trait:** Reactive. Fires C# Events when state changes.
 *   **Tech:** Pure C#. No Monobehaviours.
 
-### 2. The View (UI) 🖼️
-*   **Responsibility:** Renders the grid and captures Input (Clicks, Drags).
+### 2. The View (UI & Input) 🖼️
+*   **Responsibility:** Renders the grid, captures Input (Clicks, Drags), and handles Physics/Animation.
 *   **Key Trait:** Passive. It does not decide *what* happens, only *that* an interaction occurred.
-*   **Tech:** Unity UI, Event Interfaces.
+*   **Tech:** Unity UI, Event Interfaces, Input System.
 
 ### 3. The Presenter (Controller) 🔌
-*   **Responsibility:** The "Glue." Listens to the View events and calls Model commands.
-*   **Key Trait:** Testable. Can be unit tested by mocking the View and Model.
+*   **Responsibility:** The "Glue." Listens to the View events and calls Model commands/methods.
+*   **Key Trait:** Testable. It can be unit tested by mocking the View and Model.
 *   **Tech:** VContainer EntryPoint (`IStartable`, `IDisposable`).
 
-### 4. The Character (Finite State Machine) 🏃
-*   **The Brain (StateMachine):** A pure C# class that manages transitions (`Enter`, `Exit`, `Update`, `FixedUpdate`) and dependencies.
+### 4. The Character Wiring 🏃
+*   **The Brain (StateMachine):** A pure C# class that manages transitions (`Enter`, `Exit`, `Update`, `FixedUpdate`).
 *   **The States:**
     *   **Idle:** Listens for input to transition to move or jump.
-    *   **Move:** Handles ground movement and rotation and transition to idle or jump
-    *   **Jump:** Handles character jump and air-rotation and movement and transition to idle.
-*   **The Wiring:** States communicate via **Events**. The `IdleState` doesn't know the `MoveState` exists; it just fires `OnMove`, and the `PlayerController` handles the transition. Same applies for all states.
+    *   **Move:** Handles ground movement, rotation, and transitions.
+    *   **Jump:** Handles physics impulses and air-control.
+*   **Decoupling:** States communicate via **Events**. The `IdleState` doesn't know the `MoveState` exists; it just fires `OnMove`, and the `PlayerController` handles the transition.
 
 ## ⚔️ "Legacy" vs "Modern" Comparison
 
-This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Reference/LegacyInventoryManager.cs) to demonstrate the improvement over standard implementation.
+This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Reference/LegacyInventoryManager.cs) to demonstrate the improvement over the standard implementation.
 
 | Feature | Legacy Approach (Junior) | Modern Approach (This Project) |
 | :--- | :--- | :--- |
@@ -69,10 +71,9 @@ This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Re
 | **Testing** | Impossible without playing Scene | Logic tested in < 0.1s via Test Runner |
 
 ## 🚀 How to Run
-1.  Open project in **Unity 6**.
+1.  Open the project in **Unity 6**.
 2.  Open **Test Runner** (Window > General > Test Runner) and run EditMode tests to verify logic.
 3.  Open `Prototype_Scene`.
-4.  **Controls:**
 4.  **Controls:**
     *   **WASD / Arrows**: Move Character
     *   **Space**: Jump (with Air Control)
@@ -80,13 +81,18 @@ This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Re
     *   **S**: Add 5 Potions (Stacking Test)
     *   **R**: Remove Item
     *   **K**: Save Inventory to JSON
-    *   **Mouse**: Drag and Drop items to swap slots.
+    *   **Mouse**: Drag and drop items to swap slots.
 
 ## 📂 Project Structure
 *   `_Project/Scripts/Core`: Shared Interfaces and Signals.
-*   `_Project/Scripts/Features/Inventory`: The core module.
-    *   `/Domain`: Logic & Data (Model, ScriptableObjects).
-    *   `/View`: UI Scripts (MonoBehaviours).
-    *   `/Presentation`: Presenters (Pure C#).
-    *   `/Services`: JSON Persistence.
+*   `_Project/Scripts/Features/`:
+    *   `Inventory/`: The Core MVP Module.
+        *   `/Domain`: Logic & Data (Model, ScriptableObjects).
+        *   `/View`: UI Scripts (MonoBehaviours).
+        *   `/Presentation`: Presenters (Pure C#).
+        *   `/Services`: JSON Persistence.
+    *   `Character/`: The FSM Module.
+        *   `/Domain`: StateMachine, States (Idle, Move, Jump).
+        *   `/View`: InputReader, Physics.
+        *   `/Data`: Player Settings SO.
 *   `_Project/Tests`: NUnit Test Assembly.
