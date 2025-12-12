@@ -18,25 +18,29 @@ namespace Project.Features.AI.Components
 
         private void Start()
         {
-            // Curve Consideration.
+            // Chase curve consideration.
             CurveConsideration chaseConsideration = new CurveConsideration(
                 "Chase Curve", m_ChaseCurve,
                 () => Vector3.Distance(transform.position, m_NpcContext.Target.position),
                 0, 20);
             
-            // List of Chase Considerations.
-            List<IConsideration> chaseConsiderations = new List<IConsideration>
-            {
-                chaseConsideration,
-            };
+            // Fixed considerations
+            FixedConsideration idleFixedConsideration = new FixedConsideration(0.2f);
+            
+            // List of chase and idle considerations.
+            List<IConsideration> chaseConsiderations = new List<IConsideration> { chaseConsideration };
+            List<IConsideration> idleConsiderations = new List<IConsideration>() { idleFixedConsideration };
 
-            // MoveToTarget Action.
+            // MoveToTarget and Idle Actions.
+            // NOTE: We give each action the Consideration THAT matters to the action only.
             MoveToTargetAction chaseAction = new MoveToTargetAction(m_NpcContext, chaseConsiderations);
+            IdleAction idleAction = new IdleAction(m_NpcContext, idleConsiderations);
 
             // All actions.
             List<IUtilityAction> actions = new List<IUtilityAction>()
             {
-                chaseAction,
+                idleAction,
+                chaseAction
             };
             
             // Defining the reasoner (brain).

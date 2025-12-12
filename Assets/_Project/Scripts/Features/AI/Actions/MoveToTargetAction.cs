@@ -9,7 +9,7 @@ namespace Project.Features.AI.Actions
         private readonly NpcContext m_Context;
 
         public MoveToTargetAction(NpcContext context, List<IConsideration> considerations) 
-            : base(considerations, "Move to Target")
+            : base(considerations, "Move to Target Action")
         {
             m_Context = context;
         }
