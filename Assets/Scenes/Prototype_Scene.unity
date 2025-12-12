@@ -570,6 +570,7 @@ GameObject:
   - component: {fileID: 1157885374}
   - component: {fileID: 1157885376}
   - component: {fileID: 1157885375}
+  - component: {fileID: 1157885377}
   m_Layer: 0
   m_Name: NPC_Agent
   m_TagString: Untagged
@@ -771,6 +772,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a02956179c5c49939aba13ba5581d55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Features.AI::Project.Features.AI.Components.NpcContext
+--- !u!114 &1157885377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157885366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8f3d008cb7041ccb64dd92e10d41b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Features.AI::Project.Features.AI.Components.NpcStats
+  m_hungerSpeed: 5
 --- !u!1 &1194059634
 GameObject:
   m_ObjectHideFlags: 0
