@@ -12,6 +12,8 @@ namespace Project.Features.AI.Components
         
         [Header("Curves")]
         [SerializeField] private AnimationCurve m_ChaseCurve;
+        [SerializeField] private AnimationCurve m_HungerCurve;
+        [SerializeField] private AnimationCurve m_HasAppleCurve;
         
         private UtilityReasoner m_Brain;
         private IUtilityAction m_CurrentAction;
@@ -27,20 +29,33 @@ namespace Project.Features.AI.Components
             // Fixed considerations
             FixedConsideration idleFixedConsideration = new FixedConsideration(0.2f);
             
-            // List of chase and idle considerations.
+            // Eat curve considerations.
+            CurveConsideration hungerConsideration = new CurveConsideration(
+                "Hunger Curve", m_HungerCurve,
+                () => m_NpcContext.Stats.Hunger,
+                0, 100);
+            CurveConsideration appleConsideration = new CurveConsideration(
+                "Apple Curve", m_HasAppleCurve,
+                () => m_NpcContext.Inventory.GetTotalQuantity(m_NpcContext.GetApple().ID),
+                0, 1);
+            
+            // List of chase, idle, and eat considerations.
             List<IConsideration> chaseConsiderations = new List<IConsideration> { chaseConsideration };
             List<IConsideration> idleConsiderations = new List<IConsideration>() { idleFixedConsideration };
-
+            List<IConsideration> eatConsiderations = new List<IConsideration>() { hungerConsideration, appleConsideration };
+            
             // MoveToTarget and Idle Actions.
             // NOTE: We give each action the Consideration THAT matters to the action only.
             MoveToTargetAction chaseAction = new MoveToTargetAction(m_NpcContext, chaseConsiderations);
             IdleAction idleAction = new IdleAction(m_NpcContext, idleConsiderations);
-
+            EatAction eatAction = new EatAction(m_NpcContext, eatConsiderations, m_NpcContext.GetApple().ID);
+            
             // All actions.
             List<IUtilityAction> actions = new List<IUtilityAction>()
             {
                 idleAction,
-                chaseAction
+                chaseAction,
+                eatAction
             };
             
             // Defining the reasoner (brain).
