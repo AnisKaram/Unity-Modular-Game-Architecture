@@ -45,5 +45,7 @@ namespace Project.Features.AI.Components
                 Inventory.TryAddItem(m_Apple, 1);
             }
         }
+        
+        public InventoryItemSO GetApple() => m_Apple;
     }
 }
