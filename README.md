@@ -1,9 +1,9 @@
-# 📦 Modular Clean Game Architectures and Systems (Unity 6 + MVP + FSM)
+# 📦 Modular Clean Game Architectures and Systems (Unity 6 + MVP + FSM + Utility AI)
 
 A production-ready, scalable Inventory System demonstrating **Clean Architecture**, **Dependency Injection**, and **Test-Driven Development (TDD)** in Unity.
 
 ![Unity Version](https://img.shields.io/badge/Unity-6000.3.0f1-black)
-![Architecture](https://img.shields.io/badge/Architecture-MVP%20%2B%20FSM-blue)
+![Architecture](https://img.shields.io/badge/Architecture-MVP%20%7C%20FSM%20%7C%20Utility-blue)
 ![Testing](https://img.shields.io/badge/Testing-NUnit-green)
 
 ## 🎯 The Goal
