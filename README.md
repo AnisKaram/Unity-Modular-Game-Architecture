@@ -21,6 +21,9 @@ Core logic (Stacking, Swapping, Capacity limits) verified with NUnit EditMode te
 *   **🏗️ State Pattern:** States are decoupled via C# Events (`OnMove`, `OnJump`, etc...), allowing the Controller to act as a logic switchboard without spaghetti code.
 *   **⚙️ Data-Driven Tuning:** Movement physics (Speed, Jump Force) are configured via `ScriptableObjects`, enabling designers to tweak feel without code changes.
 *   **🎮 Input Bridging:** An `InputReader` layer that converts inputs into Domain-specific data structs, keeping logic independent of the Input System.
+*   **🧠 Utility AI Brain:** A non-linear decision-making system where NPCs evaluate actions based on scored considerations (0.0 - 1.0).
+*   **📉 Normalized Response Curves:** Uses Unity `AnimationCurves` to translate raw game data (Hunger, Distance) into utility scores, allowing for organic, emergent behavior.
+*   **🤝 System Integration:** The AI acts as a "Puppeteer," controlling the FSM Character Body and consuming items his Inventory System.
 
 ## 🎮 Gameplay Demos
 
@@ -31,6 +34,10 @@ Character Moving, Jumping, and Air Control.
 ### 2. Inventory System (MVP)
 Drag & Drop, Stacking, and JSON Save/Load.
 ![Gameplay Inventory Demo](Assets/Documentation/Images/demo.gif)
+
+### 3. Utility AI
+The Purple NPC decides between Chasing and Eating dynamically, then idle once reaches the target (player).
+![Utility AI Demo](Assets/Documentation/Images/demo_utility_ai.gif)
 
 ## 🏗️ Architecture Overview
 
@@ -58,6 +65,12 @@ Drag & Drop, Stacking, and JSON Save/Load.
     *   **Move:** Handles ground movement, rotation, and transitions.
     *   **Jump:** Handles physics impulses and air-control.
 *   **Decoupling:** States communicate via **Events**. The `IdleState` doesn't know the `MoveState` exists; it just fires `OnMove`, and the `PlayerController` handles the transition.
+
+### 5. The Utility AI (The Brain) 🤖
+*   **The Reasoner:** A generic processor that loops through available actions and picks the highest score.
+*   **The Math:** Uses `UtilityActionBase` to multiply scores. If *any* consideration is 0 (e.g., No Food), the entire action becomes impossible (Score 0).
+*   **The Bridge:** `CurveConsideration` acts as a universal adapter, converting any data type (`Func<float>`) into a normalized utility score.
+*   **Emergent Behavior:** We don't program "If Hungry -> Eat." We program "Hunger increases desire to eat." The AI balances this against its desire to Chase.
 
 ## ⚔️ "Legacy" vs "Modern" Comparison
 
@@ -95,4 +108,8 @@ This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Re
         *   `/Domain`: StateMachine, States (Idle, Move, Jump).
         *   `/View`: InputReader, Physics.
         *   `/Data`: Player Settings SO.
+    *   `AI/`: The Utility Module.
+        *   `/Domain`: Reasoner, Considerations (Math).
+        *   `/Actions`: Concrete behaviors (Chase, Eat, Idle).
+        *   `/Components`: The NPC Agent & Stats.
 *   `_Project/Tests`: NUnit Test Assembly.
