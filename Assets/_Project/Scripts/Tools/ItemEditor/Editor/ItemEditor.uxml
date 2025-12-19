@@ -1,6 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <ui:VisualElement name="SplitContainer" style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement name="LeftPane" style="flex-grow: 1; width: 250px; background-color: rgb(118, 118, 118); border-right-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+            <uie:Toolbar>
+                <uie:ToolbarButton text="Create New Item +" name="CreateItem_Button" style="-unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(167, 255, 88); font-size: 12px; -unity-font-style: bold;"/>
+            </uie:Toolbar>
             <ui:ListView name="ItemListView" style="flex-grow: 1;"/>
         </ui:VisualElement>
         <ui:VisualElement name="RightPane" style="flex-grow: 1;">
