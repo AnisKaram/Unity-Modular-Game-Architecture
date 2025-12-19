@@ -144,6 +144,8 @@ namespace Project.Tools.ItemEditor.Editor
             m_ItemListView.SetSelection(index); // Auto-select the created item.
             m_ItemListView.ScrollToItem(index); // [Optional] - when the list is long.
             
+            m_SelectedItem = newItem; // Set it as the SelectedItem because we are auto-selecting it.
+            
             Debug.Log($"Asset created successfully, under this path: {path}");
         }
 
