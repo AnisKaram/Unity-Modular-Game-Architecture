@@ -3,6 +3,7 @@ using System.Linq;
 using Project.Features.Inventory.Domain;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using ObjectField = UnityEditor.UIElements.ObjectField;
 
@@ -20,6 +21,8 @@ namespace Project.Tools.ItemEditor.Editor
         private ObjectField m_Icon;
         private IntegerField m_MaxStack;
 
+        private ToolbarButton m_CreateItem; 
+            
         private InventoryItemSO m_SelectedItem;
         
         // Have access to it by accessing it from the Menu.
@@ -54,11 +57,15 @@ namespace Project.Tools.ItemEditor.Editor
             m_Icon = rootVisualElement.Query<ObjectField>("ItemIcon_Field");
             m_MaxStack = rootVisualElement.Query<IntegerField>("ItemStack_Field");
             
+            m_CreateItem = rootVisualElement.Query<ToolbarButton>("CreateItem_Button");
+            
             // Load Data
             LoadInventoryItems();
             SetupListView();
             
             m_ItemListView.selectionChanged += OnSelectionChanged;
+            
+            m_CreateItem.clicked += OnCreateItemOnClicked;
 
             m_ID.RegisterValueChangedCallback(change =>
             {
@@ -107,6 +114,24 @@ namespace Project.Tools.ItemEditor.Editor
                 EditorUtility.SetDirty(m_SelectedItem); // Save the value changed in the scriptable object.
                 m_ItemListView.RefreshItem(m_ItemListView.selectedIndex); // Refresh the list view.
             });
+        }
+
+        private void OnCreateItemOnClicked()
+        {
+            InventoryItemSO newItem = CreateInstance<InventoryItemSO>();
+            newItem.SetName("New Item");
+            
+            string path = AssetDatabase.GenerateUniqueAssetPath("Assets/_Project/Data/Items/NewItem.asset");
+            AssetDatabase.CreateAsset(newItem, path);
+            AssetDatabase.SaveAssets();
+            
+            LoadInventoryItems(); // Reload the inventory items.
+            SetupListView();
+            m_ItemListView.Rebuild(); // Redraw
+
+            int index = m_InventoryItems.IndexOf(newItem);
+            m_ItemListView.SetSelection(index); // Auto-select the created item.
+            m_ItemListView.ScrollToItem(index); // [Optional] - when the list is long.
         }
 
         private void LoadInventoryItems()
