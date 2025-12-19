@@ -11,7 +11,7 @@ using ObjectField = UnityEditor.UIElements.ObjectField;
 // [Done] Todo: add the logic to change the asset fields (input fields).
 // [Done] Todo: add the logic to create an item.
 // Todo: add the logic to rename the asset file name.
-// Todo: add the logic to delete an asset file.
+// [Done] Todo: add the logic to delete an asset file.
 
 namespace Project.Tools.ItemEditor.Editor
 {
@@ -27,7 +27,8 @@ namespace Project.Tools.ItemEditor.Editor
         private ObjectField m_Icon;
         private IntegerField m_MaxStack;
 
-        private ToolbarButton m_CreateItem; 
+        private ToolbarButton m_CreateItem;
+        private ToolbarButton m_DeleteItem;
             
         private InventoryItemSO m_SelectedItem;
         
@@ -64,6 +65,7 @@ namespace Project.Tools.ItemEditor.Editor
             m_MaxStack = rootVisualElement.Query<IntegerField>("ItemStack_Field");
             
             m_CreateItem = rootVisualElement.Query<ToolbarButton>("CreateItem_Button");
+            m_DeleteItem = rootVisualElement.Query<ToolbarButton>("DeleteItem_Button");
             
             // Load Data
             LoadInventoryItems();
@@ -71,8 +73,10 @@ namespace Project.Tools.ItemEditor.Editor
             
             m_ItemListView.selectionChanged += OnSelectionChanged;
             
-            m_CreateItem.clicked += OnCreateItemOnClicked;
+            m_CreateItem.clicked += OnCreateItemButtonClicked;
+            m_DeleteItem.clicked += OnDeleteItemButtonClicked;
 
+            // Register the fields in the right pane.
             m_ID.RegisterValueChangedCallback(change =>
             {
                 if (m_SelectedItem == null)
@@ -122,7 +126,7 @@ namespace Project.Tools.ItemEditor.Editor
             });
         }
 
-        private void OnCreateItemOnClicked()
+        private void OnCreateItemButtonClicked()
         {
             InventoryItemSO newItem = CreateInstance<InventoryItemSO>();
             newItem.SetName("New Item");
@@ -130,6 +134,7 @@ namespace Project.Tools.ItemEditor.Editor
             string path = AssetDatabase.GenerateUniqueAssetPath("Assets/_Project/Data/Items/NewItem.asset");
             AssetDatabase.CreateAsset(newItem, path);
             AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
             
             LoadInventoryItems(); // Reload the inventory items.
             SetupListView();
@@ -138,6 +143,37 @@ namespace Project.Tools.ItemEditor.Editor
             int index = m_InventoryItems.IndexOf(newItem);
             m_ItemListView.SetSelection(index); // Auto-select the created item.
             m_ItemListView.ScrollToItem(index); // [Optional] - when the list is long.
+            
+            Debug.Log($"Asset created successfully, under this path: {path}");
+        }
+
+        private void OnDeleteItemButtonClicked()
+        {
+            if (m_SelectedItem == null)
+            {
+                Debug.LogWarning("Please select an item to delete.");
+                return;
+            }
+            
+            string assetPath = AssetDatabase.GetAssetPath(m_SelectedItem);
+            bool deleteAsset = AssetDatabase.DeleteAsset(assetPath);
+            if (deleteAsset)
+            {
+                m_SelectedItem = null;
+                
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+                
+                LoadInventoryItems();
+                SetupListView();
+                m_ItemListView.Rebuild();
+                
+                Debug.Log($"Asset deleted successfully");
+            }
+            else
+            {
+                Debug.Log($"Asset not deleted successfully");
+            }
         }
 
         private void LoadInventoryItems()
