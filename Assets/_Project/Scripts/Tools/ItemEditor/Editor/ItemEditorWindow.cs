@@ -83,6 +83,12 @@ namespace Project.Tools.ItemEditor.Editor
                 // Update the UI.
                 label.text = item.Name;
             };
+
+            // Auto-Select the first option.
+            if (m_InventoryItems.Count > 0)
+            {
+                m_ItemListView.SetSelection(0);
+            }
         }
 
     }
