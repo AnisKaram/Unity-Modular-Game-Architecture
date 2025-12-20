@@ -9,6 +9,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="RightPane" style="flex-grow: 1;">
             <ui:ScrollView name="ItemDetailsContainer" style="flex-grow: 1;">
+                <ui:TextField label="File Name" placeholder-text="fileName.asset" name="FileName_Field" password="false" style="background-color: rgb(236, 236, 236); -unity-font-style: bold;"/>
                 <ui:TextField label="ID" placeholder-text="Item ID" name="ItemID_Field"/>
                 <ui:TextField label="Name" placeholder-text="Item Name" name="ItemName_Field"/>
                 <uie:ObjectField label="Icon" name="ItemIcon_Field" type="UnityEngine.Sprite, UnityEngine.CoreModule" style="height: auto;"/>
