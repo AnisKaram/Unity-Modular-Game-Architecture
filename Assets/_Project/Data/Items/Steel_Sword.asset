@@ -15,4 +15,4 @@ MonoBehaviour:
   <ID>k__BackingField: 1
   <Name>k__BackingField: Steel Sword
   <Icon>k__BackingField: {fileID: 712035800519618848, guid: 5555116c8467a454c8c90c5cece8dc84, type: 3}
-  <MaxStack>k__BackingField: 1
+  <MaxStack>k__BackingField: 10

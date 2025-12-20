@@ -21,5 +21,10 @@ namespace Project.Features.Inventory.Domain
                 ID = System.Guid.NewGuid().ToString();
             }
         }
+        
+        public void SetID(string id) => ID = id;
+        public void SetName(string name) => Name = name;
+        public void SetIcon(Sprite icon) => Icon = icon;
+        public void SetMaxStack(int maxStack) => MaxStack = maxStack;
     }
 }

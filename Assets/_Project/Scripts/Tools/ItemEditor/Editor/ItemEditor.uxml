@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement name="SplitContainer" style="flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement name="LeftPane" style="flex-grow: 1; width: 250px; background-color: rgb(118, 118, 118); border-right-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+            <uie:Toolbar>
+                <uie:ToolbarButton text="Create New Item" name="CreateItem_Button" style="-unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(167, 255, 88); font-size: 12px; -unity-font-style: bold;"/>
+                <uie:ToolbarSpacer/>
+                <uie:ToolbarButton text="Delete Item" name="DeleteItem_Button" style="-unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(255, 88, 99); font-size: 12px; -unity-font-style: bold; color: rgb(0, 0, 0);"/>
+                <uie:ToolbarSpacer/>
+                <uie:ToolbarButton text="Refresh Items" name="RefreshItems_Button" style="-unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(248, 88, 255); font-size: 12px; -unity-font-style: bold; color: rgb(0, 0, 0);"/>
+            </uie:Toolbar>
+            <ui:ListView name="ItemListView" style="flex-grow: 1;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="RightPane" style="flex-grow: 1;">
+            <ui:ScrollView name="ItemDetailsContainer" style="flex-grow: 1;">
+                <ui:TextField label="File Name" placeholder-text="fileName.asset" name="FileName_Field" password="false" style="background-color: rgb(236, 236, 236); -unity-font-style: bold;"/>
+                <ui:TextField label="ID" placeholder-text="Item ID" name="ItemID_Field"/>
+                <ui:TextField label="Name" placeholder-text="Item Name" name="ItemName_Field"/>
+                <uie:ObjectField label="Icon" name="ItemIcon_Field" type="UnityEngine.Sprite, UnityEngine.CoreModule" style="height: auto;"/>
+                <ui:IntegerField label="Max Stack" value="42" name="ItemStack_Field"/>
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
