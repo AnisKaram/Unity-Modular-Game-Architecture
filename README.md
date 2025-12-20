@@ -1,10 +1,19 @@
 # 📦 Modular Clean Game Architectures and Systems (Unity 6 + MVP + FSM + Utility AI)
 
-A production-ready, scalable Inventory System demonstrating **Clean Architecture**, **Dependency Injection**, and **Test-Driven Development (TDD)** in Unity.
+A production-ready, modular Game Architecture Framework demonstrating **Clean Architecture**, **Dependency Injection**, **Finite State Machines**, **Utility AI**, and **Custom Tooling** in Unity 6.
 
 ![Unity Version](https://img.shields.io/badge/Unity-6000.3.0f1-black)
 ![Architecture](https://img.shields.io/badge/Architecture-MVP%20%7C%20FSM%20%7C%20Utility-blue)
 ![Testing](https://img.shields.io/badge/Testing-NUnit-green)
+
+## 📖 Table of Contents
+1.  [The Goal](#-the-goal)
+2.  [Key Features](#-key-features)
+3.  [Custom Editor Tools](#%EF%B8%8F-custom-editor-tools-ui-toolkit)
+4.  [Gameplay Demos](#-gameplay-demos)
+5.  [Architecture Overview](#%EF%B8%8F-architecture-overview)
+6.  [Setup & Controls](#-how-to-run)
+7.  [Project Structure](#-project-structure)
 
 ## 🎯 The Goal
 To engineer a system that solves the common "Spaghetti Code" problems in game development. This project moves away from tight coupling (Singletons/Monobehaviours) to a modular architecture where **Logic**, **Data**, and **UI** are completely separated.
@@ -23,7 +32,17 @@ Core logic (Stacking, Swapping, Capacity limits) verified with NUnit EditMode te
 *   **🎮 Input Bridging:** An `InputReader` layer that converts inputs into Domain-specific data structs, keeping logic independent of the Input System.
 *   **🧠 Utility AI Brain:** A non-linear decision-making system where NPCs evaluate actions based on scored considerations (0.0 - 1.0).
 *   **📉 Normalized Response Curves:** Uses Unity `AnimationCurves` to translate raw game data (Hunger, Distance) into utility scores, allowing for organic, emergent behavior.
-*   **🤝 System Integration:** The AI acts as a "Puppeteer," controlling the FSM Character Body and consuming items his Inventory System.
+*   **🤝 System Integration:** The AI acts as a "Puppeteer," controlling the FSM Character Body and consuming items from its Inventory System.
+
+## 🧰 Custom Editor Tools (UI Toolkit)
+A Dedicated Editor tool Window to manage the items.
+*   **Tech Stack:** Built using **UI Toolkit** (UXML/USS) and C# Editor Scripting.
+*   **Features:** Full CRUD workflow (Create, Read, Update, Delete).
+*   **Workflow:** Supports live asset renaming, editing, deleting and adding new item assets.
+*   **Safety:** Includes confirmation dialog for the delete action to prevent losing data.
+
+![Editor Tool Demo](Assets/Documentation/Images/demo_editor_tool.gif)
+
 
 ## 🎮 Gameplay Demos
 
@@ -38,6 +57,7 @@ Drag & Drop, Stacking, and JSON Save/Load.
 ### 3. Utility AI
 The Purple NPC decides between Chasing and Eating dynamically, then idle once reaches the target (player).
 ![Utility AI Demo](Assets/Documentation/Images/demo_utility_ai.gif)
+
 
 ## 🏗️ Architecture Overview
 
@@ -97,6 +117,7 @@ This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Re
     *   **Mouse**: Drag and drop items to swap slots.
 
 ## 📂 Project Structure
+*   `_Project/Scripts/App`: App Scopes (VContainer Scopes). 
 *   `_Project/Scripts/Core`: Shared Interfaces and Signals.
 *   `_Project/Scripts/Features/`:
     *   `Inventory/`: The Core MVP Module.
@@ -112,4 +133,7 @@ This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Re
         *   `/Domain`: Reasoner, Considerations (Math).
         *   `/Actions`: Concrete behaviors (Chase, Eat, Idle).
         *   `/Components`: The NPC Agent & Stats.
+*   `_Project/Scripts/Tools`: Editor Tools.
+    *   `ItemEditor/`: Editor Tool for managing the Items.
+        *   `Editor/`: UI Toolkit scripts (UXML, USS, C# Editor Scripting).
 *   `_Project/Tests`: NUnit Test Assembly.
