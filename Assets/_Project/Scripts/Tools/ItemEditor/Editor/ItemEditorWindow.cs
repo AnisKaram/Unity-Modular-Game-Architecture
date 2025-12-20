@@ -12,6 +12,7 @@ using ObjectField = UnityEditor.UIElements.ObjectField;
 // [Done] Todo: add the logic to create an item.
 // [Done] Todo: add the logic to rename the asset file name.
 // [Done] Todo: add the logic to delete an asset file.
+// [Done] Todo: add the logic to refresh the visuals.
 
 namespace Project.Tools.ItemEditor.Editor
 {
@@ -29,6 +30,7 @@ namespace Project.Tools.ItemEditor.Editor
 
         private ToolbarButton m_CreateItem;
         private ToolbarButton m_DeleteItem;
+        private ToolbarButton m_RefreshItems;
 
         private TextField m_FileName; 
             
@@ -68,6 +70,7 @@ namespace Project.Tools.ItemEditor.Editor
             
             m_CreateItem = rootVisualElement.Query<ToolbarButton>("CreateItem_Button");
             m_DeleteItem = rootVisualElement.Query<ToolbarButton>("DeleteItem_Button");
+            m_RefreshItems = rootVisualElement.Query<ToolbarButton>("RefreshItems_Button");
 
             m_FileName = rootVisualElement.Query<TextField>("FileName_Field");
             m_FileName.isDelayed = true; // Important: Only trigger/change when enter is clicked.
@@ -76,6 +79,7 @@ namespace Project.Tools.ItemEditor.Editor
             
             m_CreateItem.clicked += OnCreateItemButtonClicked;
             m_DeleteItem.clicked += OnDeleteItemButtonClicked;
+            m_RefreshItems.clicked += OnRefreshItemsButtonClicked;
             
             // Load Data
             LoadInventoryItems();
@@ -223,6 +227,13 @@ namespace Project.Tools.ItemEditor.Editor
             {
                 Debug.Log($"Asset not deleted successfully");
             }
+        }
+
+        private void OnRefreshItemsButtonClicked()
+        {
+            m_ItemListView.Rebuild();
+            m_ItemListView.RefreshItems();
+            Debug.Log($"Refresh items successfully");
         }
 
         private void LoadInventoryItems()
