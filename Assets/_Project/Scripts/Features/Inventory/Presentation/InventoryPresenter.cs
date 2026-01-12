@@ -1,4 +1,6 @@
 using System;
+using Project.Core;
+using Project.Core.Signals;
 using Project.Features.Inventory.Domain;
 using Project.Features.Inventory.Services;
 using Project.Features.Inventory.View;
@@ -15,13 +17,17 @@ namespace Project.Features.Inventory.Presentation
         private readonly InventoryModel m_InventoryModel;
         private readonly InventoryView m_InventoryView;
         private readonly JsonInventoryService m_SaveService;
+        private readonly EventBus m_EventBus;
+        private readonly ItemRegistry m_ItemRegistry;
 
         public InventoryPresenter(InventoryModel inventoryModel, InventoryView inventoryView,
-            JsonInventoryService saveService)
+            JsonInventoryService saveService, EventBus eventBus, ItemRegistry itemRegistry)
         {
             m_InventoryModel = inventoryModel;
             m_InventoryView = inventoryView;
             m_SaveService = saveService;
+            m_EventBus = eventBus;
+            m_ItemRegistry = itemRegistry;
         }
 
         public void Start()
@@ -29,6 +35,7 @@ namespace Project.Features.Inventory.Presentation
             m_InventoryModel.OnSlotUpdated += InventoryModel_OnSlotUpdated;
             m_InventoryView.OnSlotClicked += InventoryView_OnSlotClicked;
             m_InventoryView.OnSlotDropped += InventoryView_OnSlotDropped;
+            m_EventBus.Subscribe<ItemLootedSignal>(OnItemLooted);
             
             // Load the saved data if any.
             m_SaveService.Load(m_InventoryModel);
@@ -48,6 +55,7 @@ namespace Project.Features.Inventory.Presentation
             m_InventoryModel.OnSlotUpdated -= InventoryModel_OnSlotUpdated;
             m_InventoryView.OnSlotClicked -= InventoryView_OnSlotClicked;
             m_InventoryView.OnSlotDropped -= InventoryView_OnSlotDropped;
+            m_EventBus.Unsubscribe<ItemLootedSignal>(OnItemLooted);
         }
         
         private void InventoryModel_OnSlotUpdated(int slotIndex)
@@ -79,6 +87,12 @@ namespace Project.Features.Inventory.Presentation
             {
                 m_InventoryView.UpdateSlot(index, slot.ItemData.Icon, slot.Quantity);
             }
+        }
+
+        private void OnItemLooted(ItemLootedSignal signal)
+        {
+            InventoryItemSO item =  m_ItemRegistry.GetItem(signal.ItemId);
+            m_InventoryModel.TryAddItem(item, signal.Quantity);
         }
     }
 }

@@ -981,7 +981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Features.Interaction.LootChest
   m_LootItem: {fileID: 11400000, guid: 999ad36fcfb904ff083e392c6240cced, type: 2}
-  m_Quantity: 1
+  m_Quantity: 13
 --- !u!65 &1229080539
 BoxCollider:
   m_ObjectHideFlags: 0
