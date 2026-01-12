@@ -1,3 +1,4 @@
+using Project.Core;
 using Project.Features.Character;
 using Project.Features.Character.Data;
 using Project.Features.Character.View;
@@ -34,8 +35,9 @@ namespace Project.App.Scopes
             builder.RegisterInstance(m_ItemRegistry);
             builder.RegisterInstance(m_PlayerSettings);
             
-            // Register the save service.
+            // Register singleton services.
             builder.Register<JsonInventoryService>(Lifetime.Singleton);
+            builder.Register<EventBus>(Lifetime.Singleton);
             
             // Register the inventory model.
             InventoryModel inventoryModel = new InventoryModel(m_InventoryCapacity);
