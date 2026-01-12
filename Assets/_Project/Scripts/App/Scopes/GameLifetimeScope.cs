@@ -28,6 +28,7 @@ namespace Project.App.Scopes
         [SerializeField] private InventoryView m_InventoryView;
         [SerializeField] private PlayerInputReader m_PlayerInputReader;
         [SerializeField] private PlayerController m_PlayerController;
+        [SerializeField] private PlayerInteractor m_PlayerInteractor;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -52,6 +53,7 @@ namespace Project.App.Scopes
             builder.RegisterComponent(m_InventoryView);
             builder.RegisterComponent(m_PlayerInputReader);
             builder.RegisterComponent(m_PlayerController);
+            builder.RegisterComponent(m_PlayerInteractor);
         }
     }
 }

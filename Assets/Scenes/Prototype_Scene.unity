@@ -834,7 +834,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Features.AI::Project.Features.AI.Components.NpcStats
   m_hungerSpeed: 5
-  <Hunger>k__BackingField: 0
 --- !u!1 &1194059634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,6 +1186,7 @@ GameObject:
   - component: {fileID: 1549630471}
   - component: {fileID: 1549630466}
   - component: {fileID: 1549630465}
+  - component: {fileID: 1549630472}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1342,6 +1342,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1549630472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549630464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8f398e16d66a4f07b61176de228edd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Features.Character::Project.Features.Character.View.PlayerInteractor
+  m_InteractionRange: 2
+  m_InteractionLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &1692131548
 GameObject:
   m_ObjectHideFlags: 0
