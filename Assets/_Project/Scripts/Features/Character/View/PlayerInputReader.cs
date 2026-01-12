@@ -19,6 +19,9 @@ namespace Project.Features.Character.View
             
             // Attack
             m_PlayerInputData.attack = Input.GetButtonDown("Fire1");
+            
+            // Interact
+            m_PlayerInputData.interact = Input.GetButtonDown("Interact");
         }
         
         public PlayerInputData GetPlayerInputData() => m_PlayerInputData;
