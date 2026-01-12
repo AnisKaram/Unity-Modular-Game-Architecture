@@ -2,7 +2,6 @@ using System;
 using Project.Core.Interfaces;
 using UnityEngine;
 using VContainer;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Project.Features.Character.View
 {
