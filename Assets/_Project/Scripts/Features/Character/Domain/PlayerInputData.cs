@@ -12,5 +12,6 @@ namespace Project.Features.Character.Domain
         public Vector2 movement;
         public bool jump;
         public bool attack;
+        public bool interact;
     }
 }
