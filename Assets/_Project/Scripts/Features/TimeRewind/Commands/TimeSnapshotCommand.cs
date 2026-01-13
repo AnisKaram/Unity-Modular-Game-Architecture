@@ -18,19 +18,14 @@ namespace Project.Features.TimeRewind.Commands
             
             m_Position = m_Target.position;
             m_Rotation = m_Target.rotation;
-            m_Velocity = m_Rigidbody.linearVelocity;
         }
         
-        public void Execute()
-        {
-            
-        }
+        public void Execute() { }
 
         public void Undo()
         {
             m_Target.position = m_Position;
             m_Target.rotation = m_Rotation;
-            m_Rigidbody.linearVelocity = m_Velocity;
         }
     }
 }
