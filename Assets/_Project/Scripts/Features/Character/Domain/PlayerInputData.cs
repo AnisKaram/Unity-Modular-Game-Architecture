@@ -13,5 +13,6 @@ namespace Project.Features.Character.Domain
         public bool jump;
         public bool attack;
         public bool interact;
+        public bool isRewinding;
     }
 }

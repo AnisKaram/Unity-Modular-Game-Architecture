@@ -1,6 +1,8 @@
+using Project.Features.Character.View;
 using Project.Features.TimeRewind.Commands;
 using Project.Features.TimeRewind.Domain;
 using UnityEngine;
+using VContainer;
 using ICommand = Project.Core.Interfaces.ICommand;
 
 namespace Project.Features.TimeRewind.Components
@@ -13,8 +15,15 @@ namespace Project.Features.TimeRewind.Components
         [SerializeField] private float m_SecondsToRecord = 5f;
         [SerializeField] private bool m_IsRewinding;
         
+        private PlayerInputReader m_PlayerInputReader;
         private CircularBuffer<ICommand> m_Commands;
 
+        [Inject]
+        public void Construct(PlayerInputReader playerInputReader)
+        {
+            m_PlayerInputReader = playerInputReader;
+        }
+        
         private void Awake()
         {
             int bufferSize = Mathf.RoundToInt(m_SecondsToRecord / Time.fixedDeltaTime);
@@ -22,7 +31,7 @@ namespace Project.Features.TimeRewind.Components
         }
         private void Update()
         {
-            m_IsRewinding = Input.GetKey(KeyCode.RightShift); // Placeholder, will be replaced later.
+            m_IsRewinding = m_PlayerInputReader.GetPlayerInputData().isRewinding;
         }
         private void FixedUpdate()
         {
@@ -42,12 +51,13 @@ namespace Project.Features.TimeRewind.Components
         private void Rewind()
         {
             m_Rigidbody.isKinematic = true;
-                
-            if (m_Commands.IsNotEmpty)
+
+            if (!m_Commands.IsNotEmpty)
             {
-                ICommand command = m_Commands.Pop();
-                command.Undo();
+                return;
             }
+            ICommand command = m_Commands.Pop();
+            command.Undo();
         }
         private void Record()
         {

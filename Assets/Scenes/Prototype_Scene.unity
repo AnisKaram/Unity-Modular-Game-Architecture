@@ -530,6 +530,7 @@ MonoBehaviour:
   - {fileID: 1157885366}
   - {fileID: 1229080537}
   - {fileID: 235603749}
+  - {fileID: 1549630464}
   m_InventoryCapacity: 10
   m_ItemRegistry: {fileID: 11400000, guid: 2e5031a36429245f0bd06ee43f4e8e3d, type: 2}
   m_PlayerSettings: {fileID: 11400000, guid: 24e61f0d8b6494dd2a30709f169ee478, type: 2}
