@@ -1,0 +1,18 @@
+{
+    "name": "Features.TimeRewind",
+    "rootNamespace": "Project.Features.TimeRewind",
+    "references": [
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
+        "GUID:a9d46a0a23b2c4d7c9a462589652d5cb",
+        "GUID:263890142ddac4c1d8d0623113654270"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

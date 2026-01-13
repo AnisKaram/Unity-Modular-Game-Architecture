@@ -22,6 +22,9 @@ namespace Project.Features.Character.View
             
             // Interact
             m_PlayerInputData.interact = Input.GetButtonDown("Interact");
+            
+            // Rewind
+            m_PlayerInputData.isRewinding = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         }
         
         public PlayerInputData GetPlayerInputData() => m_PlayerInputData;
