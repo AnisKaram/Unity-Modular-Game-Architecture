@@ -12,6 +12,7 @@ namespace Project.Features.Interaction
         [Header("Settings")] 
         [SerializeField] private InventoryItemSO m_LootItem;
         [SerializeField] private int m_Quantity;
+        [SerializeField] private string m_InteractionPrompt;
 
         private EventBus m_EventBus;
 
@@ -31,9 +32,8 @@ namespace Project.Features.Interaction
 
             m_EventBus.Raise(signal);
             gameObject.SetActive(false);
-            Debug.Log("Chest Opened!");
         }
 
-        public string InteractionPrompt => "Open Chest";
+        public string InteractionPrompt => m_InteractionPrompt;
     }
 }
