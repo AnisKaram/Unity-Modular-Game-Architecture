@@ -1034,7 +1034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Features.Interaction.LootChest
   m_LootItem: {fileID: 11400000, guid: 999ad36fcfb904ff083e392c6240cced, type: 2}
-  m_Quantity: 20
+  m_Quantity: 10
   m_InteractionPrompt: Open Sword Chest
 --- !u!65 &1229080539
 BoxCollider:
@@ -1162,7 +1162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Features.Interaction.LootChest
   m_LootItem: {fileID: 11400000, guid: a54a8a0f6b4ac4871a3480b5f29d4f7f, type: 2}
-  m_Quantity: 20
+  m_Quantity: 5
   m_InteractionPrompt: Open Health Chest
 --- !u!65 &1414382854
 BoxCollider:
@@ -1791,7 +1791,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1771974809
 MonoBehaviour:
   m_ObjectHideFlags: 0

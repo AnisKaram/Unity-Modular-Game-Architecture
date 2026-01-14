@@ -15,4 +15,4 @@ MonoBehaviour:
   <ID>k__BackingField: 2
   <Name>k__BackingField: Health Potion
   <Icon>k__BackingField: {fileID: 1799121946817344791, guid: fb249afeb0ff95a438e6aec12fdf762c, type: 3}
-  <MaxStack>k__BackingField: 5
+  <MaxStack>k__BackingField: 2
