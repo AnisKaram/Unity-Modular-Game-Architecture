@@ -1,3 +1,4 @@
+using System;
 using Project.Features.Character.View;
 using Project.Features.TimeRewind.Commands;
 using Project.Features.TimeRewind.Domain;
@@ -17,6 +18,8 @@ namespace Project.Features.TimeRewind.Components
         
         private PlayerInputReader m_PlayerInputReader;
         private CircularBuffer<ICommand> m_Commands;
+
+        public event Action<bool> OnRewindStateChanged;
 
         [Inject]
         public void Construct(PlayerInputReader playerInputReader)
@@ -58,6 +61,8 @@ namespace Project.Features.TimeRewind.Components
             }
             ICommand command = m_Commands.Pop();
             command.Undo();
+            
+            OnRewindStateChanged?.Invoke(true);
         }
         private void Record()
         {
@@ -65,6 +70,8 @@ namespace Project.Features.TimeRewind.Components
             
             TimeSnapshotCommand timeSnapshot = new TimeSnapshotCommand(m_Target, m_Rigidbody);
             m_Commands.Push(timeSnapshot);
+            
+            OnRewindStateChanged?.Invoke(false);
         }
     }
 }
