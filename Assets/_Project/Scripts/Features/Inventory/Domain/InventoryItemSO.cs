@@ -11,7 +11,7 @@ namespace Project.Features.Inventory.Domain
         [field: SerializeField] public string ID { get; private set; }
         [field: SerializeField] public string Name { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }
-        [field: SerializeField] public int MaxStack { get; set; } // Todo: make the setter private after finishing unit testing
+        [field: SerializeField] public int MaxStack { get; private set; } // Todo: make the setter private after finishing unit testing
 
         private void OnValidate()
         {

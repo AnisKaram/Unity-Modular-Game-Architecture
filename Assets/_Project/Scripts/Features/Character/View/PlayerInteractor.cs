@@ -13,7 +13,6 @@ namespace Project.Features.Character.View
         
         private PlayerInputReader m_PlayerInputReader;
         
-        private IInteractable m_CurrentInteractable;
         private IInteractable m_LastInteractable;
         
         public event Action<IInteractable> OnInteractableChanged;
@@ -35,7 +34,26 @@ namespace Project.Features.Character.View
             IInteractable foundInteractable = null;
             if (hitColliders.Length > 0)
             {
-                hitColliders[0].TryGetComponent(out foundInteractable);
+                float nearestDistance = Mathf.Infinity;
+                IInteractable nearestInteractable = null;
+
+                // Find the nearest interactable.
+                for (int i = 0; i < hitColliders.Length; i++)
+                {
+                    if (hitColliders[i].TryGetComponent(out IInteractable currentInteractable))
+                    {
+                        // Avoiding Vector3.Distance because it uses Mathf.Sqrt which is slow if we are constantly checking
+                        float distSqr = (hitColliders[i].transform.position - transform.position).sqrMagnitude;
+
+                        if (distSqr < nearestDistance)
+                        {
+                            nearestDistance = distSqr;
+                            nearestInteractable = currentInteractable;
+                        }
+                    }
+                }
+
+                foundInteractable = nearestInteractable;
             }
 
             if (foundInteractable != m_LastInteractable)
@@ -43,12 +61,10 @@ namespace Project.Features.Character.View
                 m_LastInteractable = foundInteractable;
                 OnInteractableChanged?.Invoke(foundInteractable);
             }
-            m_CurrentInteractable = foundInteractable;
-
             
-            if (m_PlayerInputReader.GetPlayerInputData().interact && m_CurrentInteractable != null)
+            if (m_PlayerInputReader.GetPlayerInputData().interact && foundInteractable != null)
             {
-                m_CurrentInteractable.Interact();
+                foundInteractable.Interact();
             }
         }
     }

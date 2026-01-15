@@ -53,7 +53,7 @@ namespace Project.Features.Inventory.Domain
                     }
                 }
             }
-
+            
             // Second, we need to try to find an empty slot and add it to it.
             foreach (InventorySlot slot in Slots)
             {
@@ -64,13 +64,21 @@ namespace Project.Features.Inventory.Domain
 
                 if (slot.IsEmpty)
                 {
-                    slot.SetItem(itemToAdd, quantity); // Put the rest here
-
-                    quantity = 0;
-
-                    OnSlotUpdated?.Invoke(Slots.IndexOf(slot));
-
-                    return true;
+                    int space = itemToAdd.MaxStack;
+                    
+                    if (space > 0)
+                    {
+                        int quantityToAdd = Mathf.Min(space, quantity);
+                        slot.SetItem(itemToAdd, quantityToAdd); // Put the rest here
+                        quantity -= quantityToAdd;
+                        
+                        OnSlotUpdated?.Invoke(Slots.IndexOf(slot));
+                        
+                        if (quantity <= 0)
+                        {
+                            return true;
+                        }   
+                    }
                 }
             }
 
@@ -116,17 +124,10 @@ namespace Project.Features.Inventory.Domain
             // Store A in temporary fields.
             var tempItem = slotA.ItemData;
             var tempQuantity = slotA.Quantity;
-
+            
             // Swap B into A
-            if (slotB.IsEmpty)
-            {
-                slotA.Clear();
-            }
-            else
-            {
-                slotA.SetItem(slotB.ItemData, slotB.Quantity);
-            }
-
+            slotA.SetItem(slotB.ItemData, slotB.Quantity);
+            
             // Move temp A into B.
             slotB.SetItem(tempItem, tempQuantity);
 
@@ -149,6 +150,20 @@ namespace Project.Features.Inventory.Domain
             }
 
             return total;
+        }
+
+        public int GetItemIndex(string itemID)
+        {
+            for (int i = 0; i < Slots.Count; i++)
+            {
+                var slot = Slots[i];
+                if (slot.ItemData.ID == itemID)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         // Use and consume the item.
