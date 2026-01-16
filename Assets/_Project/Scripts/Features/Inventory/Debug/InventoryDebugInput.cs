@@ -26,6 +26,7 @@ namespace Project.Features.Inventory.DebugScripts
 
         private void Update()
         {
+            /*
             if (Input.GetKeyDown(KeyCode.A))
             {
                 // Add 1 Sword.
@@ -53,6 +54,7 @@ namespace Project.Features.Inventory.DebugScripts
                 Debug.Log("Removing 5 items from slot 0");
                 m_InventoryModel.RemoveItem(0, 5);
             }
+            */
 
             if (Input.GetKeyDown(KeyCode.K))
             {

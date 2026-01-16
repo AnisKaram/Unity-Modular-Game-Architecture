@@ -1873,6 +1873,7 @@ MonoBehaviour:
   m_Rigidbody: {fileID: 1549630471}
   m_Target: {fileID: 1549630470}
   m_SecondsToRecord: 5
+  m_FramesOffset: 2
   m_IsRewinding: 0
 --- !u!1 &1692131548
 GameObject:
@@ -1987,7 +1988,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771974808}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed97804da7f8649adb26fc93fd40132a, type: 3}
   m_Name: 
