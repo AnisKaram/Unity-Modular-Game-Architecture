@@ -1,6 +1,6 @@
-# 📦 Modular Clean Game Architectures and Systems (Unity 6 + MVP + FSM + Utility AI)
+# 📦 Modular Clean Game Architectures and Systems (Unity 6 + MVP + FSM + Utility AI + Event Bus)
 
-A production-ready, modular Game Architecture Framework demonstrating **Clean Architecture**, **Dependency Injection**, **Finite State Machines**, **Utility AI**, and **Custom Tooling** in Unity 6.
+A production-ready, modular Game Architecture Framework demonstrating **Clean Architecture**, **Dependency Injection**, **Finite State Machines**, **Utility AI**, **Event Bus**, and **Custom Tooling** in Unity 6.
 
 ![Unity Version](https://img.shields.io/badge/Unity-6000.3.0f1-black)
 ![Architecture](https://img.shields.io/badge/Architecture-MVP%20%7C%20FSM%20%7C%20Utility-blue)
@@ -28,11 +28,13 @@ To engineer a system that solves the common "Spaghetti Code" problems in game de
 Core logic (Stacking, Swapping, Capacity limits) verified with NUnit EditMode tests.
 *   **🤖 Modular Character Controller:** A Finite State Machine (FSM) implementation where behaviors (Idle, Move, Jump) are isolated in pure C# classes.
 *   **🏗️ State Pattern:** States are decoupled via C# Events (`OnMove`, `OnJump`, etc...), allowing the Controller to act as a logic switchboard without spaghetti code.
-*   **⚙️ Data-Driven Tuning:** Movement physics (Speed, Jump Force) are configured via `ScriptableObjects`, enabling designers to tweak feel without code changes.
+*   **⚙️  Data-Driven Tuning:** Movement physics (Speed, Jump Force) are configured via `ScriptableObjects`, enabling designers to tweak feel without code changes.
 *   **🎮 Input Bridging:** An `InputReader` layer that converts inputs into Domain-specific data structs, keeping logic independent of the Input System.
 *   **🧠 Utility AI Brain:** A non-linear decision-making system where NPCs evaluate actions based on scored considerations (0.0 - 1.0).
 *   **📉 Normalized Response Curves:** Uses Unity `AnimationCurves` to translate raw game data (Hunger, Distance) into utility scores, allowing for organic, emergent behavior.
 *   **🤝 System Integration:** The AI acts as a "Puppeteer," controlling the FSM Character Body and consuming items from its Inventory System.
+*   **🚌 Event-Driven Architecture:** Implemented a Type-Safe **Event Bus** (Publisher/Subscriber) to decouple independent systems. For example, loot chests broadcast messages that the Inventory System listens for, removing direct dependencies.
+*   **📦 Scalable Interaction:** A decoupled Interaction System using the `IInteractable` interface. The Player can interact with any object (Chests, Doors, NPCs) without knowing the specific class implementation.
 
 ## 🧰 Custom Editor Tools (UI Toolkit)
 A Dedicated Editor tool Window to manage the items.
@@ -57,6 +59,11 @@ Drag & Drop, Stacking, and JSON Save/Load.
 ### 3. Utility AI
 The Purple NPC decides between Chasing and Eating dynamically, then idle once reaches the target (player).
 ![Utility AI Demo](Assets/Documentation/Images/demo_utility_ai.gif)
+
+### 4. Event Bus with Interaction System
+The player interacts with any chest (or other interactables) using the E button and it uses the logic to pick the nearest one when it's within the player's
+range, then it uses the event bus to notify the inventory to add the item(s).
+![Interaction Demo](Assets/Documentation//Images/demo_interaction_system.gif)
 
 
 ## 🏗️ Architecture Overview
@@ -92,6 +99,12 @@ The Purple NPC decides between Chasing and Eating dynamically, then idle once re
 *   **The Bridge:** `CurveConsideration` acts as a universal adapter, converting any data type (`Func<float>`) into a normalized utility score.
 *   **Emergent Behavior:** We don't program "If Hungry -> Eat." We program "Hunger increases desire to eat." The AI balances this against its desire to Chase.
 
+### 6. The Event Bus (The Glue) 🔗
+*   **Problem:** Systems like "Loot Chests" and "Inventory" often get tightly coupled.
+*   **Solution:** A centralized Event Bus that routes signals.
+*   **Flow:** Player interacts $\rightarrow$ Chest fires `ItemLootedSignal` $\rightarrow$ Bus $\rightarrow$ Inventory receives item.
+*   **Benefit:** You can add new listeners (UI, Achievements, Audio) without changing the Chest code and avoid tight references.
+
 ## ⚔️ "Legacy" vs "Modern" Comparison
 
 This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Reference/LegacyInventoryManager.cs) to demonstrate the improvement over the standard implementation.
@@ -110,9 +123,6 @@ This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Re
 4.  **Controls:**
     *   **WASD / Arrows**: Move Character
     *   **Space**: Jump (with Air Control)
-    *   **A**: Add Sword
-    *   **S**: Add 5 Potions (Stacking Test)
-    *   **R**: Remove Item
     *   **K**: Save Inventory to JSON
     *   **Mouse**: Drag and drop items to swap slots.
 
@@ -129,6 +139,9 @@ This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Re
         *   `/Domain`: StateMachine, States (Idle, Move, Jump).
         *   `/View`: InputReader, Physics.
         *   `/Data`: Player Settings SO.
+    *   `Interaction/`: Interaction Logic and View.
+        *   `/Components`: Logic that sits on interactable objects inheriting from IInteractable.
+        *   `/View`: UI Scripts.
     *   `AI/`: The Utility Module.
         *   `/Domain`: Reasoner, Considerations (Math).
         *   `/Actions`: Concrete behaviors (Chase, Eat, Idle).
