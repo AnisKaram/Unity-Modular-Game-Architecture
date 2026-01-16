@@ -1,9 +1,9 @@
 # 📦 Modular Clean Game Architectures and Systems (Unity 6 + MVP + FSM + Utility AI + Event Bus)
 
-A production-ready, modular Game Architecture Framework demonstrating **Clean Architecture**, **Dependency Injection**, **Finite State Machines**, **Utility AI**, **Event Bus**, and **Custom Tooling** in Unity 6.
+A production-ready, modular Game Architecture Framework demonstrating **Clean Architecture**, **Dependency Injection**, **Finite State Machines**, **Utility AI**, **Event Bus**, **Command Pattern and Rewind System** and **Custom Tooling** in Unity 6.
 
 ![Unity Version](https://img.shields.io/badge/Unity-6000.3.0f1-black)
-![Architecture](https://img.shields.io/badge/Architecture-MVP%20%7C%20FSM%20%7C%20Utility-blue)
+![Architecture](https://img.shields.io/badge/Architecture-MVP%20%7C%20FSM%20%7C%20Utility%20%7C%20Command%20%7C%20EventBus-blue)
 ![Testing](https://img.shields.io/badge/Testing-NUnit-green)
 
 ## 📖 Table of Contents
@@ -35,6 +35,7 @@ Core logic (Stacking, Swapping, Capacity limits) verified with NUnit EditMode te
 *   **🤝 System Integration:** The AI acts as a "Puppeteer," controlling the FSM Character Body and consuming items from its Inventory System.
 *   **🚌 Event-Driven Architecture:** Implemented a Type-Safe **Event Bus** (Publisher/Subscriber) to decouple independent systems. For example, loot chests broadcast messages that the Inventory System listens for, removing direct dependencies.
 *   **📦 Scalable Interaction:** A decoupled Interaction System using the `IInteractable` interface. The Player can interact with any object (Chests, Doors, NPCs) without knowing the specific class implementation.
+*   **⏪ Time Manipulation:** Implemented a **Command Pattern** rewind system. Uses a custom **Circular Buffer** to store player's position and rotation efficiently, overwriting old data to manage memory automatically. It also features recording only when moving to ignore idle frames.
 
 ## 🧰 Custom Editor Tools (UI Toolkit)
 A Dedicated Editor tool Window to manage the items.
@@ -64,6 +65,10 @@ The Purple NPC decides between Chasing and Eating dynamically, then idle once re
 The player interacts with any chest (or other interactables) using the E button and it uses the logic to pick the nearest one when it's within the player's
 range, then it uses the event bus to notify the inventory to add the item(s).
 ![Interaction Demo](Assets/Documentation//Images/demo_interaction_system.gif)
+
+### 5. Time Rewind System
+Uses the Command Pattern to record and reverse players states in real-time.
+![Time Rewind Demo](Assets/Documentation/Images/demo_rewind_system.gif)
 
 
 ## 🏗️ Architecture Overview
@@ -105,6 +110,12 @@ range, then it uses the event bus to notify the inventory to add the item(s).
 *   **Flow:** Player interacts $\rightarrow$ Chest fires `ItemLootedSignal` $\rightarrow$ Bus $\rightarrow$ Inventory receives item.
 *   **Benefit:** You can add new listeners (UI, Achievements, Audio) without changing the Chest code and avoid tight references.
 
+### 7. The Time System (Command & Circular Buffer) ⏳
+*   **The Command:** `TimeSnapshotCommand` captures the player's state (position, rotation) for a single frame when moving.
+*   **The Recorder:** `TimeManager` pushes commands to a generic `CircularBuffer<ICommand>`.
+*   **Memory Logic:** Uses a Circular Buffer (Circular Stack/LIFO) instead of a List to avoid infinite memory growth and LIFO instead of FIFO which serves the logic.
+*   **Optimization:** Logic checks for player movement and rotation; if the player is idle, no frame is recorded to save memory.
+
 ## ⚔️ "Legacy" vs "Modern" Comparison
 
 This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Reference/LegacyInventoryManager.cs) to demonstrate the improvement over the standard implementation.
@@ -142,6 +153,10 @@ This project includes a [Legacy Reference Script](Assets/Documentation/Legacy_Re
     *   `Interaction/`: Interaction Logic and View.
         *   `/Components`: Logic that sits on interactable objects inheriting from IInteractable.
         *   `/View`: UI Scripts.
+    *   `TimeRewind/`:
+        *   `/Commands`: All TimeRewind Commands that inherits from ICommands interface.
+        *   `/Components`: TimeRewind Monobehaviour that record and rewind.
+        *   `/Domain`: Generic CircularBuffer and all other data scripts.
     *   `AI/`: The Utility Module.
         *   `/Domain`: Reasoner, Considerations (Math).
         *   `/Actions`: Concrete behaviors (Chase, Eat, Idle).
