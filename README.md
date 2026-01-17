@@ -1,4 +1,4 @@
-# 📦 Modular Clean Game Architectures and Systems (Unity 6 + MVP + FSM + Utility AI + Event Bus)
+# 📦 Modular Clean Game Architecture and Systems (Unity 6 + MVP + FSM + Utility AI + Event Bus)
 
 A production-ready, modular Game Architecture Framework demonstrating **Clean Architecture**, **Dependency Injection**, **Finite State Machines**, **Utility AI**, **Event Bus**, **Command Pattern and Rewind System** and **Custom Tooling** in Unity 6.
 
