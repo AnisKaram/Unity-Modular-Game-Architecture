@@ -719,6 +719,7 @@ MonoBehaviour:
   - {fileID: 1414382852}
   - {fileID: 235603749}
   - {fileID: 73564889}
+  - {fileID: 1549630464}
   m_InventoryCapacity: 10
   m_ItemRegistry: {fileID: 11400000, guid: 2e5031a36429245f0bd06ee43f4e8e3d, type: 2}
   m_PlayerSettings: {fileID: 11400000, guid: 24e61f0d8b6494dd2a30709f169ee478, type: 2}
@@ -1750,6 +1751,7 @@ GameObject:
   - component: {fileID: 1549630465}
   - component: {fileID: 1549630472}
   - component: {fileID: 1549630473}
+  - component: {fileID: 1549630474}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1881,6 +1883,19 @@ MonoBehaviour:
   m_SecondsToRecord: 5
   m_FramesOffset: 2
   m_IsRewinding: 0
+--- !u!114 &1549630474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549630464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57d7796665ac042c7aaaa2c509790494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Features.Character::Project.Features.Character.PlayerAnimationView
+  m_Animator: {fileID: 2060228387}
 --- !u!1 &1692131548
 GameObject:
   m_ObjectHideFlags: 0
