@@ -7,6 +7,10 @@ namespace Project.Features.Character
     {
         [SerializeField] private Animator m_Animator;
         
+        private readonly int m_RunningHash = Animator.StringToHash("IsRunning");
+        private readonly int m_JumpingHash = Animator.StringToHash("Jumped");
+        private readonly int m_LandingHash = Animator.StringToHash("Landed");
+        
         private PlayerController m_PlayerController;
         
         [Inject]
@@ -32,22 +36,22 @@ namespace Project.Features.Character
 
         private void PlayerController_OnIdle()
         {
-            m_Animator.SetBool("IsRunning", false);
+            m_Animator.SetBool(m_RunningHash, false);
         }
         
         private void PlayerController_OnMove()
         {
-            m_Animator.SetBool("IsRunning", true);
+            m_Animator.SetBool(m_RunningHash, true);
         }
         
         private void PlayerController_OnJump()
         {
-            m_Animator.SetTrigger("Jumped");
+            m_Animator.SetTrigger(m_JumpingHash);
         }
         
         private void PlayerController_OnLand()
         {
-            m_Animator.SetTrigger("Landed");
+            m_Animator.SetTrigger(m_LandingHash);
         }
     }
 }
