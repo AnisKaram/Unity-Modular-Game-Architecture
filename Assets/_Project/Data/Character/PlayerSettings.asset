@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Features.Character::Project.Features.Character.Data.PlayerSettingsSO
   <movementSpeed>k__BackingField: 5
   <jumpForce>k__BackingField: 5
+  <jumpRaycastDistance>k__BackingField: 1.5
   <rotationSpeed>k__BackingField: 10
   <groundLayer>k__BackingField:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3072
