@@ -31,5 +31,10 @@ namespace Project.Features.AI.Actions
                 }
             }
         }
+
+        public override void TriggerAnimation(INpcAnimator npcAnimator)
+        {
+            npcAnimator.TriggerIsEating();
+        }
     }
 }
