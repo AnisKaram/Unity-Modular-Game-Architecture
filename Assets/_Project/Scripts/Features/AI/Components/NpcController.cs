@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Project.Features.AI.Actions;
 using Project.Features.AI.Domain;
+using Project.Features.AI.View;
 using UnityEngine;
 
 namespace Project.Features.AI.Components
@@ -9,7 +10,7 @@ namespace Project.Features.AI.Components
     {
         [Header("References")]
         [SerializeField] private NpcContext m_NpcContext;
-        [SerializeField] private Animator m_Animator;
+        [SerializeField] private NpcAnimationView m_NpcAnimationView;
         
         [Header("Curves")]
         [SerializeField] private AnimationCurve m_ChaseCurve;
@@ -70,7 +71,7 @@ namespace Project.Features.AI.Components
             if (bestAction != null && m_CurrentAction != bestAction)
             {
                 m_CurrentAction = bestAction;
-                m_CurrentAction.TriggerAnimation(m_Animator);
+                m_CurrentAction.TriggerAnimation(m_NpcAnimationView);
                 Debug.Log("NPC switched to " + m_CurrentAction.Name);
             }
 

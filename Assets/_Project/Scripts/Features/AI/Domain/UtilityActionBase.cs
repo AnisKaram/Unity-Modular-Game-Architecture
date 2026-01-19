@@ -34,6 +34,6 @@ namespace Project.Features.AI.Domain
         }
 
         public abstract void Execute();
-        public abstract void TriggerAnimation(Animator animator);
+        public abstract void TriggerAnimation(INpcAnimator npcAnimator);
     }
 }

@@ -32,9 +32,9 @@ namespace Project.Features.AI.Actions
             }
         }
 
-        public override void TriggerAnimation(Animator animator)
+        public override void TriggerAnimation(INpcAnimator npcAnimator)
         {
-            animator.SetTrigger("IsEating");
+            npcAnimator.TriggerIsEating();
         }
     }
 }

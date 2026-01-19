@@ -20,9 +20,9 @@ namespace Project.Features.AI.Actions
             m_Context.Agent.ResetPath();
         }
 
-        public override void TriggerAnimation(Animator animator)
+        public override void TriggerAnimation(INpcAnimator npcAnimator)
         {
-            animator.SetBool("IsRunning", false);
+            npcAnimator.SetIsRunning(false);
         }
     }
 }

@@ -20,9 +20,9 @@ namespace Project.Features.AI.Actions
             m_Context.Agent.SetDestination(m_Context.Target.position);
         }
 
-        public override void TriggerAnimation(Animator animator)
+        public override void TriggerAnimation(INpcAnimator npcAnimator)
         {
-            animator.SetBool("IsRunning", true);
+            npcAnimator.SetIsRunning(true);
         }
     }
 }
