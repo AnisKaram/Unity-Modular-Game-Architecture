@@ -31,5 +31,10 @@ namespace Project.Features.AI.Actions
                 }
             }
         }
+
+        public override void TriggerAnimation(Animator animator)
+        {
+            animator.SetTrigger("IsEating");
+        }
     }
 }

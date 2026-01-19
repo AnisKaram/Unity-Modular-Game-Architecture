@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Project.Features.AI.Components;
 using Project.Features.AI.Domain;
+using UnityEngine;
 
 namespace Project.Features.AI.Actions
 {
@@ -17,6 +18,11 @@ namespace Project.Features.AI.Actions
         public override void Execute()
         {
             m_Context.Agent.ResetPath();
+        }
+
+        public override void TriggerAnimation(Animator animator)
+        {
+            animator.SetBool("IsRunning", false);
         }
     }
 }
