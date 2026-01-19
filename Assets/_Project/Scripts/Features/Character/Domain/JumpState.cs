@@ -56,7 +56,7 @@ namespace Project.Features.Character.Domain
         {
             if (m_Rigidbody.linearVelocity.y < 0)
             {
-                if (Physics.Raycast(m_ObjectTransform.position, Vector3.down, 1.1f, m_PlayerSettings.groundLayer))
+                if (Physics.Raycast(m_ObjectTransform.position, Vector3.down, 1.5f, m_PlayerSettings.groundLayer))
                 {
                     OnLand?.Invoke();
                     Debug.Log("Landed on ground");
