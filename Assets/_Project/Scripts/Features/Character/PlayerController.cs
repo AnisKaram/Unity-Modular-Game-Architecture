@@ -1,3 +1,4 @@
+using System;
 using Project.Features.Character.Data;
 using Project.Features.Character.Domain;
 using Project.Features.Character.View;
@@ -18,6 +19,12 @@ namespace Project.Features.Character
         private JumpState m_JumpState;
         
         private StateMachine m_StateMachineInstance;
+
+        public event Action OnIdle;
+        public event Action OnMove;
+        public event Action OnJump;
+        public event Action OnLand;
+        
         
         [Inject]
         public void Construct(PlayerInputReader playerInputReader, PlayerSettingsSO playerSettings)
@@ -64,26 +71,32 @@ namespace Project.Features.Character
         private void IdleState_OnMove()
         {
             m_StateMachineInstance.ChangeState(m_MoveState);
+            OnMove?.Invoke();
         }
 
         private void IdleState_OnJump()
         {
             m_StateMachineInstance.ChangeState(m_JumpState);
+            OnJump?.Invoke();
         }
 
         private void MoveState_OnIdle()
         {
             m_StateMachineInstance.ChangeState(m_IdleState);
+            OnIdle?.Invoke();
         }
 
         private void MoveState_OnJump()
         {
             m_StateMachineInstance.ChangeState(m_JumpState);
+            OnJump?.Invoke();
         }
 
         private void JumpState_OnLand()
         {
             m_StateMachineInstance.ChangeState(m_IdleState);
+            OnLand?.Invoke();
+            OnIdle?.Invoke();
         }
     }
 }
