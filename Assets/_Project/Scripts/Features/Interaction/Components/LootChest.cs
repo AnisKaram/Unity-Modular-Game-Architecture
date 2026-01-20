@@ -12,6 +12,7 @@ namespace Project.Features.Interaction.Components
     {
         [Header("References")]
         [SerializeField] private LootChestAnimationEvents m_ChestEvents;
+        [SerializeField] private Collider m_Collider;
         
         [Header("Settings")] 
         [SerializeField] private InventoryItemSO m_LootItem;
@@ -45,6 +46,8 @@ namespace Project.Features.Interaction.Components
                 Quantity = m_Quantity
             };
 
+            m_Collider.enabled = false;
+            
             m_EventBus.Raise(signal);
             OnOpen?.Invoke();
         }

@@ -1441,6 +1441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Features.Interaction.LootChest
   m_ChestEvents: {fileID: 727966059}
+  m_Collider: {fileID: 1229080539}
   m_LootItem: {fileID: 11400000, guid: 999ad36fcfb904ff083e392c6240cced, type: 2}
   m_Quantity: 10
   m_InteractionPrompt: Open Sword Chest
@@ -1473,14 +1474,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1229080537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -1.25, z: 3.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 727966057}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1229080543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1687,6 +1688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Features.Interaction.LootChest
   m_ChestEvents: {fileID: 1145524375}
+  m_Collider: {fileID: 1414382854}
   m_LootItem: {fileID: 11400000, guid: a54a8a0f6b4ac4871a3480b5f29d4f7f, type: 2}
   m_Quantity: 5
   m_InteractionPrompt: Open Health Chest
@@ -1719,14 +1721,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1414382852}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.57, y: -1.25, z: -0.35}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -3.4, y: -1.25, z: -3.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1145524371}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1414382858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2092,7 +2094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f398e16d66a4f07b61176de228edd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Features.Character::Project.Features.Character.View.PlayerInteractor
-  m_InteractionRange: 5
+  m_InteractionRange: 1
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 2048
