@@ -14,5 +14,8 @@ namespace Project.Core.Input.Domain
         public bool attack;
         public bool interact;
         public bool isRewinding;
+        
+        // Inventory UI
+        public bool inventoryToggle;
     }
 }

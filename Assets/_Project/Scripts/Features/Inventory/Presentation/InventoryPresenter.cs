@@ -1,5 +1,6 @@
 using System;
 using Project.Core;
+using Project.Core.Input;
 using Project.Core.Signals;
 using Project.Features.Inventory.Domain;
 using Project.Features.Inventory.Services;
@@ -19,15 +20,17 @@ namespace Project.Features.Inventory.Presentation
         private readonly JsonInventoryService m_SaveService;
         private readonly EventBus m_EventBus;
         private readonly ItemRegistry m_ItemRegistry;
+        private readonly PlayerInputReader m_PlayerInputReader;
 
         public InventoryPresenter(InventoryModel inventoryModel, InventoryView inventoryView,
-            JsonInventoryService saveService, EventBus eventBus, ItemRegistry itemRegistry)
+            JsonInventoryService saveService, EventBus eventBus, ItemRegistry itemRegistry, PlayerInputReader playerInputReader)
         {
             m_InventoryModel = inventoryModel;
             m_InventoryView = inventoryView;
             m_SaveService = saveService;
             m_EventBus = eventBus;
             m_ItemRegistry = itemRegistry;
+            m_PlayerInputReader = playerInputReader;
         }
 
         public void Start()
@@ -36,6 +39,7 @@ namespace Project.Features.Inventory.Presentation
             m_InventoryView.OnSlotClicked += InventoryView_OnSlotClicked;
             m_InventoryView.OnSlotDropped += InventoryView_OnSlotDropped;
             m_EventBus.Subscribe<ItemLootedSignal>(OnItemLooted);
+            m_PlayerInputReader.OnInventoryToggled += PlayerInputReader_OnInventoryToggled;
             
             // Load the saved data if any.
             m_SaveService.Load(m_InventoryModel);
@@ -49,13 +53,17 @@ namespace Project.Features.Inventory.Presentation
             {
                 HandleSlotUpdate(i);
             }
+            
+            m_InventoryView.Hide();
         }
+
         public void Dispose()
         {
             m_InventoryModel.OnSlotUpdated -= InventoryModel_OnSlotUpdated;
             m_InventoryView.OnSlotClicked -= InventoryView_OnSlotClicked;
             m_InventoryView.OnSlotDropped -= InventoryView_OnSlotDropped;
             m_EventBus.Unsubscribe<ItemLootedSignal>(OnItemLooted);
+            m_PlayerInputReader.OnInventoryToggled -= PlayerInputReader_OnInventoryToggled;
         }
         
         private void InventoryModel_OnSlotUpdated(int slotIndex)
@@ -93,6 +101,18 @@ namespace Project.Features.Inventory.Presentation
         {
             InventoryItemSO item =  m_ItemRegistry.GetItem(signal.ItemId);
             m_InventoryModel.TryAddItem(item, signal.Quantity);
+        }
+        
+        private void PlayerInputReader_OnInventoryToggled(bool toggle)
+        {
+            if (toggle)
+            {
+                m_PlayerInputReader.EnableInventoryUIInput();
+                m_InventoryView.Show();
+                return;
+            }
+            m_InventoryView.Hide();
+            m_PlayerInputReader.EnablePlayerInput();
         }
     }
 }
