@@ -241,6 +241,34 @@ namespace Project.Core.Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Inventory_UI"",
+            ""id"": ""fcc4b8b2-cfa0-446a-949f-7426f24b4368"",
+            ""actions"": [
+                {
+                    ""name"": ""Toggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2a34b8b-4c62-4c13-af3d-841ea9f42303"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a07224f0-2286-4bc0-956b-1a7d2f0bf573"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Toggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -252,11 +280,15 @@ namespace Project.Core.Input
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
             m_Player_Rewind = m_Player.FindAction("Rewind", throwIfNotFound: true);
+            // Inventory_UI
+            m_Inventory_UI = asset.FindActionMap("Inventory_UI", throwIfNotFound: true);
+            m_Inventory_UI_Toggle = m_Inventory_UI.FindAction("Toggle", throwIfNotFound: true);
         }
 
         ~@GameControls()
         {
             UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, GameControls.Player.Disable() has not been called.");
+            UnityEngine.Debug.Assert(!m_Inventory_UI.enabled, "This will cause a leak and performance issues, GameControls.Inventory_UI.Disable() has not been called.");
         }
 
         /// <summary>
@@ -468,6 +500,102 @@ namespace Project.Core.Input
         /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
         /// </summary>
         public PlayerActions @Player => new PlayerActions(this);
+
+        // Inventory_UI
+        private readonly InputActionMap m_Inventory_UI;
+        private List<IInventory_UIActions> m_Inventory_UIActionsCallbackInterfaces = new List<IInventory_UIActions>();
+        private readonly InputAction m_Inventory_UI_Toggle;
+        /// <summary>
+        /// Provides access to input actions defined in input action map "Inventory_UI".
+        /// </summary>
+        public struct Inventory_UIActions
+        {
+            private @GameControls m_Wrapper;
+
+            /// <summary>
+            /// Construct a new instance of the input action map wrapper class.
+            /// </summary>
+            public Inventory_UIActions(@GameControls wrapper) { m_Wrapper = wrapper; }
+            /// <summary>
+            /// Provides access to the underlying input action "Inventory_UI/Toggle".
+            /// </summary>
+            public InputAction @Toggle => m_Wrapper.m_Inventory_UI_Toggle;
+            /// <summary>
+            /// Provides access to the underlying input action map instance.
+            /// </summary>
+            public InputActionMap Get() { return m_Wrapper.m_Inventory_UI; }
+            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+            public void Enable() { Get().Enable(); }
+            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+            public void Disable() { Get().Disable(); }
+            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+            public bool enabled => Get().enabled;
+            /// <summary>
+            /// Implicitly converts an <see ref="Inventory_UIActions" /> to an <see ref="InputActionMap" /> instance.
+            /// </summary>
+            public static implicit operator InputActionMap(Inventory_UIActions set) { return set.Get(); }
+            /// <summary>
+            /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+            /// </summary>
+            /// <param name="instance">Callback instance.</param>
+            /// <remarks>
+            /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+            /// </remarks>
+            /// <seealso cref="Inventory_UIActions" />
+            public void AddCallbacks(IInventory_UIActions instance)
+            {
+                if (instance == null || m_Wrapper.m_Inventory_UIActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_Inventory_UIActionsCallbackInterfaces.Add(instance);
+                @Toggle.started += instance.OnToggle;
+                @Toggle.performed += instance.OnToggle;
+                @Toggle.canceled += instance.OnToggle;
+            }
+
+            /// <summary>
+            /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+            /// </summary>
+            /// <remarks>
+            /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+            /// </remarks>
+            /// <seealso cref="Inventory_UIActions" />
+            private void UnregisterCallbacks(IInventory_UIActions instance)
+            {
+                @Toggle.started -= instance.OnToggle;
+                @Toggle.performed -= instance.OnToggle;
+                @Toggle.canceled -= instance.OnToggle;
+            }
+
+            /// <summary>
+            /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="Inventory_UIActions.UnregisterCallbacks(IInventory_UIActions)" />.
+            /// </summary>
+            /// <seealso cref="Inventory_UIActions.UnregisterCallbacks(IInventory_UIActions)" />
+            public void RemoveCallbacks(IInventory_UIActions instance)
+            {
+                if (m_Wrapper.m_Inventory_UIActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            /// <summary>
+            /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+            /// </summary>
+            /// <remarks>
+            /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+            /// </remarks>
+            /// <seealso cref="Inventory_UIActions.AddCallbacks(IInventory_UIActions)" />
+            /// <seealso cref="Inventory_UIActions.RemoveCallbacks(IInventory_UIActions)" />
+            /// <seealso cref="Inventory_UIActions.UnregisterCallbacks(IInventory_UIActions)" />
+            public void SetCallbacks(IInventory_UIActions instance)
+            {
+                foreach (var item in m_Wrapper.m_Inventory_UIActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_Inventory_UIActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        /// <summary>
+        /// Provides a new <see cref="Inventory_UIActions" /> instance referencing this action map.
+        /// </summary>
+        public Inventory_UIActions @Inventory_UI => new Inventory_UIActions(this);
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
         /// </summary>
@@ -510,6 +638,21 @@ namespace Project.Core.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnRewind(InputAction.CallbackContext context);
+        }
+        /// <summary>
+        /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Inventory_UI" which allows adding and removing callbacks.
+        /// </summary>
+        /// <seealso cref="Inventory_UIActions.AddCallbacks(IInventory_UIActions)" />
+        /// <seealso cref="Inventory_UIActions.RemoveCallbacks(IInventory_UIActions)" />
+        public interface IInventory_UIActions
+        {
+            /// <summary>
+            /// Method invoked when associated input action "Toggle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnToggle(InputAction.CallbackContext context);
         }
     }
 }
