@@ -21,7 +21,13 @@ namespace Project.Features.Interaction.Components
 
         private EventBus m_EventBus;
 
-        public event Action OnOpen;
+        public event EventHandler<LootChestEventArgs> OnOpen;
+        
+        public class LootChestEventArgs : EventArgs
+        {
+            public string Name { get; set; }
+            public int Quantity { get; set; }
+        }
 
         [Inject]
         public void Construct(EventBus eventBus)
@@ -49,7 +55,13 @@ namespace Project.Features.Interaction.Components
             m_Collider.enabled = false;
             
             m_EventBus.Raise(signal);
-            OnOpen?.Invoke();
+
+            LootChestEventArgs args = new()
+            {
+                Name = m_LootItem.Name,
+                Quantity = m_Quantity
+            };
+            OnOpen?.Invoke(this, args);
         }
 
         public string InteractionPrompt => m_InteractionPrompt;
