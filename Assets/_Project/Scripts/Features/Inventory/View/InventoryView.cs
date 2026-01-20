@@ -55,6 +55,9 @@ namespace Project.Features.Inventory.View
             InventorySlotView inventorySlotView = m_InventorySlots[index];
             inventorySlotView.SetData(icon, quantity);
         }
+        
+        public void Show() => m_Container.gameObject.SetActive(true);
+        public void Hide() => m_Container.gameObject.SetActive(false);
 
         private void InventorySlotView_OnBeginDragSlot(int index, Sprite icon)
         {

@@ -1,4 +1,4 @@
-using Project.Features.Character.View;
+using Project.Core.Input;
 using UnityEngine;
 using System;
 

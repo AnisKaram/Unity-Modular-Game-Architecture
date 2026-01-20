@@ -1,14 +1,16 @@
-using Project.Core.Input;
-using Project.Features.Character.Domain;
+using System;
+using Project.Core.Input.Domain;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Project.Features.Character.View
+namespace Project.Core.Input
 {
     public class PlayerInputReader : MonoBehaviour
     {
         private PlayerInputData m_PlayerInputData;
         private GameControls m_GameControls;
+        
+        public event Action<bool> OnInventoryToggled;
 
         private void Awake()
         {
@@ -33,13 +35,17 @@ namespace Project.Features.Character.View
             m_GameControls.Player.Rewind.started += OnRewindStarted;
             m_GameControls.Player.Rewind.canceled += OnRewindCanceled;
 
+            m_GameControls.Inventory_UI.Toggle.started += OnInventoryToggleStarted;
+
             m_GameControls.Player.Enable();
+            m_GameControls.Inventory_UI.Enable();
             
             Debug.Log("Controls: GameControls Enabled and Subscribed to Events!");
         }
         private void OnDisable()
         {
             m_GameControls.Player.Disable();
+            m_GameControls.Inventory_UI.Disable();
 
             m_GameControls.Player.Move.performed -= OnMovePerformed;
             m_GameControls.Player.Move.canceled -= OnMoveCanceled;
@@ -55,6 +61,8 @@ namespace Project.Features.Character.View
 
             m_GameControls.Player.Rewind.started -= OnRewindStarted;
             m_GameControls.Player.Rewind.canceled -= OnRewindCanceled;
+            
+            m_GameControls.Inventory_UI.Toggle.started -= OnInventoryToggleStarted;
             
             Debug.Log("Controls: GameControls Disabled and Unsubscribed from Events!");
         }
@@ -83,6 +91,22 @@ namespace Project.Features.Character.View
         private void OnRewindStarted(InputAction.CallbackContext ctx) => m_PlayerInputData.isRewinding = true;
         private void OnRewindCanceled(InputAction.CallbackContext ctx) => m_PlayerInputData.isRewinding = false;
 
+        private void OnInventoryToggleStarted(InputAction.CallbackContext ctx)
+        {
+            m_PlayerInputData.inventoryToggle = !m_PlayerInputData.inventoryToggle;
+            OnInventoryToggled?.Invoke(m_PlayerInputData.inventoryToggle);
+        }
+        
         public PlayerInputData GetPlayerInputData() => m_PlayerInputData;
+
+        public void EnableInventoryUIInput()
+        {
+            m_GameControls.Player.Disable();
+            m_GameControls.Inventory_UI.Enable();
+        }
+        public void EnablePlayerInput()
+        {
+            m_GameControls.Player.Enable();
+        }
     }
 }
