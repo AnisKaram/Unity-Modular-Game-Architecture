@@ -20,7 +20,7 @@ namespace Project.Features.Interaction.View
             m_Chest.OnOpen -= Chest_OnOpen;
         }
         
-        private void Chest_OnOpen()
+        private void Chest_OnOpen(object sender, LootChest.LootChestEventArgs eventArgs)
         {
             TriggerOpenAnimation();
         }
