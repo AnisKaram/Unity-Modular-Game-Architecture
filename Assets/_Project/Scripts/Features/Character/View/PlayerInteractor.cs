@@ -2,6 +2,7 @@ using System;
 using Project.Core.Interfaces;
 using UnityEngine;
 using VContainer;
+using Project.Core.Input;
 
 namespace Project.Features.Character.View
 {

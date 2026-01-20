@@ -1,7 +1,7 @@
 using System;
 using Project.Features.Character.Data;
 using Project.Features.Character.Domain;
-using Project.Features.Character.View;
+using Project.Core.Input;
 using UnityEngine;
 using VContainer;
 

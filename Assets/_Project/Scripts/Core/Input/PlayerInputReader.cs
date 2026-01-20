@@ -1,9 +1,8 @@
-using Project.Core.Input;
-using Project.Features.Character.Domain;
+using Project.Core.Input.Domain;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Project.Features.Character.View
+namespace Project.Core.Input
 {
     public class PlayerInputReader : MonoBehaviour
     {

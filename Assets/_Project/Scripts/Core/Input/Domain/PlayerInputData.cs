@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Project.Features.Character.Domain
+namespace Project.Core.Input.Domain
 {
     /// <summary>
     /// Better to use struct over a class since this will often be created, and we don't want garbage collection
