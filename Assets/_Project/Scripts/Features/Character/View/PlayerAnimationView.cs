@@ -1,7 +1,7 @@
 using UnityEngine;
 using VContainer;
 
-namespace Project.Features.Character
+namespace Project.Features.Character.View
 {
     public class PlayerAnimationView : MonoBehaviour
     {
