@@ -2,6 +2,7 @@ using Project.Features.Character.Data;
 using Project.Core.Input;
 using UnityEngine;
 using System;
+using com.atk.logger;
 
 namespace Project.Features.Character.Domain
 {
@@ -23,7 +24,7 @@ namespace Project.Features.Character.Domain
         
         public void Enter()
         {
-            Debug.Log("Enter MoveState");
+            EditorLogger.Log("Enter MoveState", Color.green);
         }
 
         public void Update()
