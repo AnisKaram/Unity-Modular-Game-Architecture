@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.atk.logger": "https://github.com/AnisKaram/Unity-Custom-Logger-Package.git",
     "com.unity.ai.navigation": "2.0.9",
     "com.unity.cinemachine": "3.1.5",
     "com.unity.collab-proxy": "2.10.2",

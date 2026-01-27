@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.atk.logger": {
+      "version": "https://github.com/AnisKaram/Unity-Custom-Logger-Package.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "844115966d79b3b31798f73ab71831eef58fde8a"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.2",
       "depth": 1,
